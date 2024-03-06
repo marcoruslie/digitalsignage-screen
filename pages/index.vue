@@ -12,17 +12,7 @@
         <source :src="previewImage" type="video/mp4">
       </video>
     </div>
-    <!-- <div v-else>
-      <div v-if="currentItem.type === 'image'">
-        <img :src="currentItem.path" alt="Image">
-      </div>
-      <div v-else-if="currentItem.type === 'video'">
-        <video controls width="400">
-          <source :src="currentItem.path" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div> -->
+    
   </div>
 </template>
 
