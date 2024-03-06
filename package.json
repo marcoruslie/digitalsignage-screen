@@ -1,0 +1,20 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "multer": "^1.4.5-lts.1",
+    "multiparty": "^4.2.3",
+    "nuxt": "^3.10.3",
+    "unstorage": "^1.10.1",
+    "vue": "^3.4.19",
+    "vue-router": "^4.3.0"
+  }
+}
