@@ -17,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+
 const { uploadFile, getFileList } = useFileData();
 const file = ref<File | null>(null);
 const previewImage = ref('');
@@ -24,6 +25,8 @@ const isImage = ref(false);
 const uploadedUrl = ref(null);
 const fileList = ref([])
 const currentContent = ref('');
+
+
 onMounted(async () => {
   fileList.value = await getFileList();
   console.log(fileList.value[0]);
