@@ -12,11 +12,12 @@
         <source :src="previewImage" type="video/mp4">
       </video>
     </div>
-    
+
   </div>
 </template>
 
 <script setup lang="ts">
+import io from 'socket.io-client';
 
 const { uploadFile, getFileList } = useFileData();
 const file = ref<File | null>(null);
@@ -27,8 +28,13 @@ const fileList = ref([])
 const currentContent = ref('');
 
 
+
 onMounted(async () => {
   fileList.value = await getFileList();
+  const socket = io('http://10.10.3.193:3000/api/socket.io');
+  socket.on('chat', (data) => {
+    console.log('Received message from server:', data);
+  });
   console.log(fileList.value[0]);
 });
 const handleFileChange = async (event: Event) => {
