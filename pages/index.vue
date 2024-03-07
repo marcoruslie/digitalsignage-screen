@@ -33,8 +33,8 @@ onMounted(async () => {
   fileList.value = await getFileList();
   const socket = io('http://10.10.3.193:3000/api/socket.io');
 
-  socket.on('chat', (data) => {
-    console.log('Received message from server:', data);
+  socket.on('chat', (response: Record<string,string>) => {
+    console.log(response);
   })
   console.log(fileList.value[0]);
 });
