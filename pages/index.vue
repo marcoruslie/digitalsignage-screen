@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import {io} from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 const { uploadFile, getFileList } = useFileData();
 const file = ref<File | null>(null);
@@ -31,11 +31,12 @@ const currentContent = ref('');
 
 onMounted(async () => {
   fileList.value = await getFileList();
-  const socket = io('http://10.10.3.193:3000/api/socket.io');
+  console.log(io)
+  // const socket = io('http://10.10.3.193:3000/api/socket.io');
 
-  socket.on('chat', (response: Record<string,string>) => {
-    console.log(response);
-  })
+  // socket.on('/chat', (response: Record<string,string>) => {
+  //   console.log(response);
+  // })
   console.log(fileList.value[0]);
 });
 const handleFileChange = async (event: Event) => {
