@@ -32,11 +32,11 @@ const currentContent = ref('');
 onMounted(async () => {
   fileList.value = await getFileList();
   console.log(io)
-  // const socket = io('http://10.10.3.193:3000/api/socket.io');
+  const socket = io('http://10.10.2.240:3000/api/socket.io');
 
-  // socket.on('/chat', (response: Record<string,string>) => {
-  //   console.log(response);
-  // })
+  socket.on('/chat', (response: Record<string,string>) => {
+    console.log(response);
+  })
   console.log(fileList.value[0]);
 });
 const handleFileChange = async (event: Event) => {
