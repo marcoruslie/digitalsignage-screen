@@ -31,10 +31,13 @@ const currentContent = ref('');
 
 onMounted(async () => {
   fileList.value = await getFileList();
-  console.log(io)
-  const socket = io('http://10.10.2.240:3000/api/socket.io');
+  // console.log(io)
+  const socket = io('/chat',{
+    host: '10.10.2.240',
+    port: 3000
+  });
 
-  socket.on('/chat', (response: Record<string,string>) => {
+  socket.on('/connection', (response: Record<string,string>) => {
     console.log(response);
   })
   console.log(fileList.value[0]);
