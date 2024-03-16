@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div v-if="fileList.length != 0">
       <!-- Input element for file selection -->
       <input type="file" @change="handleFileChange">
@@ -12,8 +11,6 @@
         <source :src="previewImage" type="video/mp4">
       </video>
     </div>
-    
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -31,16 +28,24 @@ const currentContent = ref('');
 
 onMounted(async () => {
   fileList.value = await getFileList();
-  // console.log(io)
-  const socket = io('/chat',{
-    host: '10.10.2.240',
-    port: 3000
+  
+  const socket = io('http://localhost:3000',{
+    path: '/api/socket.io',
+    
   });
-
-  socket.on('/connection', (response: Record<string,string>) => {
+  socket.connect();
+  // if(!socket.connected){
+  //   setInterval(() => {
+  //     useRouter().go(0);
+  //   }, 5000);
+  // }
+  socket.on('tes', (response: Record<string,string>) => {
     console.log(response);
   })
-  console.log(fileList.value[0]);
+  socket.on('refresh', ()=>{
+    useRouter().go(0);
+  })
+  // console.log(fileList.value[0]);
 });
 const handleFileChange = async (event: Event) => {
   const _file = (event.target as HTMLInputElement).files?.[0];
