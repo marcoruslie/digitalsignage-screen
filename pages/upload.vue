@@ -1,48 +1,54 @@
 <template>
-    <input type="file" name="" id="" multiple>
-    <button @click="upload">Upload File</button>
+    <button @click="playVideo">Play Video</button>
     <br>
-    <div style="display: flex; flex-wrap: wrap;">{{ previewImage }}</div>
-    <img v-if="isImage && file != null" :src="previewImage" alt="preview" style="width: auto; height: 90vh;">
-    <video v-if="!isImage && file != null" controls style="width: auto; height: 90vh;">
-        <source :src="previewImage" type="video/mp4">
-    </video>
+    <button @click="pauseVideo">Pause Video</button>
+    <br>
+    <button @click="resumeVideo">Resume Video</button>
+    <div class="">
+        <div id="player"></div>
+    </div>
 </template>
-<script setup lang="ts">
-const { uploadFile, getFileList } = useFileData();
-const file = ref<File | null>(null);
-const previewImage = ref('');
-const isImage = ref(false);
-const fileList = ref(await getFileList())
-const postDate = ref<Date>(new Date());
 
+<script setup>
+let youtubePlayer;
 
-onMounted(async () => {
+onMounted(() => {
+    // Load the YouTube Player API script dynamically
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 });
-const handleFileChange = async (event: Event) => {
-    const _file = (event.target as HTMLInputElement).files?.[0] as File;
-    if (!_file) return;
-    file.value = _file;
-    isImage.value = file.value.type.includes('image');
-    handlePreviewContent(file.value);
-};
 
-const handlePreviewContent = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        previewImage.value = e.target?.result as string;
-        console.log(previewImage.value);
-    };
-    reader.readAsDataURL(file);
-};
-
-const upload = async () => {
-    if (!file.value) return;
-    try {
-        const response = await uploadFile(file.value, (fileList.value.length + 1) + "-" + "2",postDate.value);
-        alert(response);
-    } catch (error) {
-        console.error('Error uploading file:', error);
+// Function to create and initialize the YouTube player
+const playVideo = () => {
+    if (YT && YT.Player) {
+        youtubePlayer = new YT.Player('player', {
+            height: '315',
+            width: '560',
+            videoId: 'WqGOaOHu5uY', // Replace with your video ID
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
     }
-}
+};
+
+// Function called when the player is ready
+const onPlayerReady = (event) => {
+    event.target.playVideo(); // Automatically start playing the video
+};
+
+// Function to pause the video
+const pauseVideo = () => {
+    if (youtubePlayer) {
+        youtubePlayer.pauseVideo();
+    }
+};
+
+const resumeVideo = () => {
+  if (youtubePlayer) {
+    youtubePlayer.playVideo();
+  }
+};
 </script>

@@ -14,5 +14,9 @@ export default () => {
         const fileList = await $fetch('/api/file/getFile');
         return fileList;
     }
-    return { uploadFile, getFileList };
+    const getAllPlaylist = async () => {
+        const allPlaylist = await $fetch('/api/file/getAllFile');
+        return allPlaylist;
+    }
+    return { uploadFile, getFileList, getAllPlaylist};
 }

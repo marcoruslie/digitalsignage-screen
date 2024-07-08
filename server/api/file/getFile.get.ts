@@ -107,17 +107,28 @@ async function getFileList(files: string[], directoryPath: string, formattedDate
 
   for (const file of files) {
     const filePath: string = path.resolve(directoryPath, file);
-    
     const fileStats: fs.Stats = await fs.promises.stat(filePath);
-    
-    if (fileStats.isFile()) {
-      const fileType = getFileType(file);
-      const relativeFilePath = path.join("/resources", formattedDate, file)
-      fileList.push({
-        url: relativeFilePath,
-        type: fileType,
-      });
+    let dataContent = []
+    if (fileStats.isDirectory()) {
+      const listFiles = await readDirectory(filePath);
+      for (const listFile of listFiles) {
+        const listFilePath: string = path.resolve(filePath, listFile);
+        const listFileStats: fs.Stats = await fs.promises.stat(listFilePath);
+        if (listFileStats.isFile()) {
+          const fileType = getFileType(listFile);
+          const relativeFilePath = path.join("/resources", formattedDate, file, listFile);
+          dataContent.push({
+            url: relativeFilePath,
+            type: fileType,
+          });
+        }
+      }
     }
+    
+    fileList.push({
+      duration: file.split('-')[1],
+      dataContent
+    });
   }
 
   return fileList;
