@@ -43,13 +43,13 @@
 
 <script setup>
 	import { io } from "socket.io-client"
-	import SlideShowDesign from "~/components/SlideShowDesign.vue"
-	import TwoSideDesign from "~/components/TwoSideDesign.vue"
+	const port = "3001"
 	const { getTemplate, setTemplate } = useTemplate()
 	const template = ref(await getTemplate())
 	const { getFileList, getAllPlaylist } = useFileData()
 	const router = useRouter()
-	const routePath = ref("")
+	const routePath = await $fetch("http://localhost:" + port + "/api/os")
+
 	// Youtube API
 	let youtubePlayer
 	let unmuteInterval
@@ -78,7 +78,7 @@
 		router.go()
 	})
 	socket.on("connect", () => {
-		socket.emit("clientType", window.location.origin)
+		socket.emit("clientType", routePath + ":" + port)
 	})
 	socket.on("tes", (response) => {
 		console.log(response)
