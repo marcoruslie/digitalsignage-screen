@@ -5,12 +5,15 @@ export default defineEventHandler((event) => {
 	const port = 3000
 	for (const name of Object.keys(interfaces)) {
 		for (const iface of interfaces[name]) {
-			if (iface.family === "IPv4" && !iface.internal && name === "Ethernet") {
-				networkAddress = iface.address
-				break
+			if (iface.family === "IPv4" && !iface.internal) {
+				if(name === "Ethernet" || name === "Wi-Fi")
+				{
+					networkAddress = iface.address
+					break
+				}
 			}
 		}
 		if (networkAddress) break
 	}
-	return networkAddress
+	return 'http://'+networkAddress
 })

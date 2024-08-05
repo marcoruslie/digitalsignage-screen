@@ -36,14 +36,16 @@
 			</div>
 		</marquee>
 
-		<div id="player"></div>
-		<div class="hidden"></div>
+		
+		<div class="hidden">
+			<div id="player"></div>
+		</div>
 	</div>
 </template>
 
 <script setup>
 	import { io } from "socket.io-client"
-	const port = "3001"
+	const port = "3000"
 	const { getTemplate, setTemplate } = useTemplate()
 	const template = ref(await getTemplate())
 	const { getFileList, getAllPlaylist } = useFileData()
@@ -61,9 +63,9 @@
 	// TWO SIDE DESIGN VARIABLES
 	// THREE SIDE DESIGN VARIABLES
 
-	// const host = "http://192.168.0.197:3000/"
+	const host = "http://192.168.0.190:3000/"
 	// const host = "http://10.10.4.210:3000/"
-	const host = "http://localhost:3000/"
+	// const host = "http://localhost:3000/"
 	const socket = io(host, {
 		path: "/api/socket.io",
 	})
