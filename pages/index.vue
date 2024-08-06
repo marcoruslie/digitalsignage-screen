@@ -36,7 +36,6 @@
 			</div>
 		</marquee>
 
-		
 		<div class="hidden">
 			<div id="player"></div>
 		</div>
@@ -45,7 +44,7 @@
 
 <script setup>
 	import { io } from "socket.io-client"
-	const port = "3000"
+	const port = "3001"
 	const { getTemplate, setTemplate } = useTemplate()
 	const template = ref(await getTemplate())
 	const { getFileList, getAllPlaylist } = useFileData()
@@ -90,7 +89,7 @@
 	})
 	socket.on("changeBgm", (data) => {
 		console.log(data)
-		socket.emit("playMusic", { bgm: data.bgm })
+		selectVideo(data.bgm)
 	})
 
 	onMounted(() => {
@@ -155,19 +154,9 @@
 		if (youtubePlayer) {
 			youtubePlayer.loadVideoById(videoId)
 			youtubePlayer.setPlaybackQuality("tiny")
-
+			youtubePlayer.mute()
 			youtubePlayer.playVideo()
-			youtubePlayer.unMute()
-		}
-	}
-	const pauseVideo = () => {
-		if (youtubePlayer) {
-			youtubePlayer.pauseVideo()
-		}
-	}
-	const resumeVideo = () => {
-		if (youtubePlayer) {
-			youtubePlayer.playVideo()
+			unmuteWhenPlaying(youtubePlayer)
 		}
 	}
 	const playContent = async () => {
@@ -182,7 +171,6 @@
 			}
 		}
 	}
-	const playReminder = async () => {}
 	function delayWithLogging(ms) {
 		let seconds = 0
 		return new Promise((resolve) => {
@@ -195,30 +183,5 @@
 				resolve()
 			}, ms)
 		})
-	}
-	const autoClickAnywhere = (x, y) => {
-		const event = new MouseEvent("click", {
-			view: window,
-			bubbles: true,
-			cancelable: true,
-			clientX: x,
-			clientY: y,
-		})
-
-		const element = document.elementFromPoint(x, y)
-		if (element) {
-			element.dispatchEvent(event)
-			console.log("CLICKED")
-		}
-	}
-	const autoClickByXPath = (xpath) => {
-		const getElementByXpath = (path) => {
-			return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue
-		}
-		const element = getElementByXpath(xpath)
-		if (element) {
-			element.click()
-			console.log("CLICKED")
-		}
 	}
 </script>
