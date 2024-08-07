@@ -89,7 +89,7 @@
 		await setYoutubeMusic(temp)
 		console.log(data)
 		selectVideo(data.bgm)
-		socket.emit("musicId", youtubeId.value)
+		socket.emit("musicId", data.bgm)
 	})
 	socket.on("tes", (response) => {
 		console.log(response)
