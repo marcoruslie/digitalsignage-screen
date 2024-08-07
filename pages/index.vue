@@ -44,7 +44,7 @@
 
 <script setup>
 	import { io } from "socket.io-client"
-	const port = "3001"
+	const port = "3000"
 	const { getTemplate, setTemplate } = useTemplate()
 	const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 	const template = ref(await getTemplate())
