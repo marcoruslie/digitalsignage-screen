@@ -46,7 +46,9 @@
 	import { io } from "socket.io-client"
 	const port = "3001"
 	const { getTemplate, setTemplate } = useTemplate()
+	const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 	const template = ref(await getTemplate())
+	const youtubeId = ref(await getYoutubeMusic())
 	const { getFileList, getAllPlaylist } = useFileData()
 	const router = useRouter()
 	const routePath = await $fetch("http://localhost:" + port + "/api/os")
@@ -78,21 +80,30 @@
 		await setTemplate(temp)
 		router.go()
 	})
-	socket.on("connect", () => {
-		socket.emit("clientType", routePath + ":" + port)
+	socket.on("changeBgm", async (data) => {
+		youtubeId.value = await getYoutubeMusic()
+		const temp = {
+			oldName: youtubeId.value,
+			newName: data.bgm,
+		}
+		await setYoutubeMusic(temp)
+		console.log(data)
+		selectVideo(data.bgm)
+		socket.emit("musicId", youtubeId.value)
 	})
 	socket.on("tes", (response) => {
 		console.log(response)
 	})
-	socket.on("reqDataPlaylist", async () => {
-		socket.emit("resDataPlaylist", await getAllPlaylist())
-	})
-	socket.on("changeBgm", (data) => {
-		console.log(data)
-		selectVideo(data.bgm)
-	})
 
 	onMounted(() => {
+		// EVENT TO SERVER
+		socket.on("connect", () => {
+			socket.emit("clientType", routePath + ":" + port)
+			socket.emit("musicId", youtubeId.value)
+		})
+		socket.on("reqDataPlaylist", async () => {
+			socket.emit("resDataPlaylist", await getAllPlaylist())
+		})
 		playContent()
 		// Load the YouTube Player API script dynamically
 		const tag = document.createElement("script")
@@ -123,7 +134,7 @@
 		})
 	}
 	const onPlayerReady = (event) => {
-		event.target.loadVideoById("HPxCrNH2HbY")
+		event.target.loadVideoById(youtubeId.value)
 		event.target.playVideo()
 		unmuteWhenPlaying(event.target)
 	}
