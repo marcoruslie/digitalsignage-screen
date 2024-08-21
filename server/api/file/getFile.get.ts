@@ -6,7 +6,7 @@ import { fi } from "date-fns/locale";
 export default defineEventHandler(async (event) => {
   try {
     const currentDate = new Date();
-    const resourcePath = './resources';
+    const resourcePath = './resources/playlist';
     
     // Get list of directories inside /resources
     const directories = await readDirectories(resourcePath);
@@ -116,7 +116,7 @@ async function getFileList(files: string[], directoryPath: string, formattedDate
         const listFileStats: fs.Stats = await fs.promises.stat(listFilePath);
         if (listFileStats.isFile()) {
           const fileType = getFileType(listFile);
-          const relativeFilePath = path.join("/resources", formattedDate, file, listFile);
+          const relativeFilePath = path.join("/resources/playlist", formattedDate, file, listFile);
           dataContent.push({
             url: relativeFilePath,
             type: fileType,

@@ -1,0 +1,35 @@
+{
+	"playlist_id": "6faecb7c-e334-4e36-8443-a901084e3aac",
+	"data": [
+		{
+			"duration": "5",
+			"dataContent": [
+				{
+					"url": "/resources/PengumumanKampus/Asset1.jpeg",
+					"type": "image"
+				},
+				{
+					"url": "/resources/PengumumanKampus/Asset1.mp4",
+					"type": "video"
+				},
+				{
+					"url": "/resources/PengumumanKampus/Asset2.png",
+					"type": "image"
+				}
+			]
+		},
+		{
+			"duration": "10",
+			"dataContent": [
+				{
+					"url": "/resources/PengumumanKampus/Asset2.mp4",
+					"type": "video"
+				},
+				{
+					"url": "/resources/PengumumanKampus/Asset3.jpeg",
+					"type": "image"
+				}
+			]
+		}
+	]
+}
