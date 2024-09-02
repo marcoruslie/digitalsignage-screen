@@ -11,11 +11,7 @@
 		<div
 			v-else-if="template == 'template1'"
 			class="relative flex flex-col justify-between">
-			<SlideShowDesign
-				:fileList="fileList"
-				:currentIndex="currentIndex"
-				:leaving="leaving"
-				:currentItem="currentItem" />
+			<SlideShowDesign :currentItem="currentItem" />
 		</div>
 		<div
 			v-else-if="template == 'template2'"
@@ -63,7 +59,7 @@
 <script setup>
 	import { parse } from "date-fns"
 	import { io } from "socket.io-client"
-	const port = "3001"
+	const port = "3000"
 	const { getTemplate, setTemplate } = useTemplate()
 	const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 	const template = ref(await getTemplate())
