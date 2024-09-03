@@ -6,7 +6,7 @@ export default defineEventHandler((event) => {
 	for (const name of Object.keys(interfaces)) {
 		for (const iface of interfaces[name]) {
 			if (iface.family === "IPv4" && !iface.internal) {
-				if(name === "Ethernet" || name === "Wi-Fi")
+				if(name === "Ethernet" || name === "Wi-Fi" || name === "wlan0")
 				{
 					networkAddress = iface.address
 					break
