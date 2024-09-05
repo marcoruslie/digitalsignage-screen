@@ -126,7 +126,14 @@
 			console.log(jsonResult)
 			if (jsonResult == "success") {
 				socket.emit("success", "Berhasil menambahkan playlist ke dalam screen")
-				// router.go()
+				await new Promise((resolve) => {
+					setTimeout(() => {
+						resolve()
+					}, 2000)
+				}).then(() => {
+					router.go()
+				})
+				router.go()
 			} else {
 			}
 		}
