@@ -75,7 +75,7 @@ const currentItem = ref("")
 // TWO SIDE DESIGN VARIABLES
 // THREE SIDE DESIGN VARIABLES
 
-const host = "http://192.168.0.190:3000/"
+const host = "http://192.168.7.220:3000/"
 // const host = "http://10.10.4.210:3000/"
 // const host = "http://localhost:3000/"
 const socket = io(host, {
