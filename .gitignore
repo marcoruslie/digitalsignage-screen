@@ -24,4 +24,4 @@ logs
 !.env.example
 
 resources
-reminder.json
+resources/reminder/reminder.json
