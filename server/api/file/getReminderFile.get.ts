@@ -9,8 +9,10 @@ async function readJsonFile(filePath: string): Promise<any> {
     fs.access(filePath, fs.constants.F_OK, (err) => {
       if (err) {
         // File doesn't exist, create it with default content
-        const defaultContent = JSON.stringify({ reminders: [] }, null, 2); // Default structure
-
+        const defaultContent = JSON.stringify([], null, 2); // Default structure
+        if (!fs.existsSync(path.dirname(filePath))) {
+          fs.mkdirSync(path.dirname(filePath), { recursive: true });
+        }
         fs.writeFile(filePath, defaultContent, "utf8", (err) => {
           if (err) {
             reject(`Error creating file: ${err}`);

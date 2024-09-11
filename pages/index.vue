@@ -60,9 +60,12 @@ const template = ref(await getTemplate())
 const youtubeId = ref(await getYoutubeMusic())
 const { getFileList, getAllPlaylist, getReminder, saveFile, changeJsonFile } = useFileData()
 const reminder = ref(await getReminder())
-reminder.value = reminder.value.sort((a, b) => {
-	return new Date(a.Deadline) - new Date(b.Deadline)
-})
+console.log(reminder.value.length)
+if (reminder.value != null || reminder.value.length > 0) {
+	reminder.value = reminder.value.sort((a, b) => {
+		return new Date(a.Deadline) - new Date(b.Deadline)
+	})
+}
 const router = useRouter()
 const routePath = await $fetch("http://localhost:" + port + "/api/os")
 // Youtube API
