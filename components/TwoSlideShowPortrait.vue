@@ -1,10 +1,9 @@
 <template>
-    <div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer overflow-hidden w-[100vh] h-[97vw]">
+    <div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer h-[97vw] overflow-hidden">
         <div class="flex flex-col justify-center items-center w-full h-full">
-            <div class="flex w-full h-2/5 overflow-auto shadow-lg">
+            <div class="flex justify-center items-center h-1/2 w-full overflow-auto shadow-lg">
                 <!-- Weather UI -->
-                <div
-                    class="w-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-between px-6 py-4">
+                <div class="w-1/3 flex flex-col items-center justify-between">
                     <h2 class="sm:text-2xl lg:text-5xl font-semibold text-white mb-2">{{ city }}</h2>
                     <img :src="icon" alt="" />
                     <p class="sm:text-xl lg:text-3xl text-gray-200 mb-1">{{ weatherDescription.toUpperCase() }}</p>
@@ -13,10 +12,22 @@
                     <!-- <p class="text-2xl text-gray-200 mb-1">Kelembapan: {{ humidity }}%</p>
                         <p class="text-2xl text-gray-200 mb-1">Kecepatan Angin: {{ windSpeed }} m/detik</p> -->
                 </div>
+                <div class="w-2/3 flex flex-col items-center justify-between">
+                    <img v-if="currentItem.type === 'image'" :src="'/_nuxt/' + currentItem.url" class="h-full" />
+                    <video v-else autoplay muted class="h-full">
+                        <source :src="'/_nuxt/' + currentItem.url" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
 
-                <!-- Reminder -->
-                <div ref="reminderContainer"
-                    class="w-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex-col items-center bg-opacity-60 space-y-2 p-2 justify-center overflow-auto">
+            <div class="flex justify-center items-center h-1/2 w-full bg-black bg-opacity-10">
+                <div class="w-2/3 flex flex-col items-center justify-between">
+                    <img v-if="currentItem.type === 'image'" :src="'/_nuxt/' + currentItem.url" class="h-full" />
+                    <video v-else autoplay muted class="h-full">
+                        <source :src="'/_nuxt/' + currentItem.url" type="video/mp4" />
+                    </video>
+                </div>
+                <div ref="reminderContainer" class="w-1/3 flex flex-col items-center justify-center h-full space-y-2">
                     <div v-for="remind in reminder"
                         class="rounded text-OnPrimaryContainer w-full py-2 px-1 flex justify-between" :class="{
                             'bg-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
@@ -34,21 +45,15 @@
                             <div>{{ getFormattedTimeDifference(remind.Deadline) }}</div>
                         </div>
                     </div>
+
                 </div>
             </div>
-
-            <div class="flex justify-center items-center h-full bg-black bg-opacity-10">
-                <img v-if="currentItem.type === 'image'" :src="'/_nuxt/' + currentItem.url" class="h-full" />
-                <video v-else autoplay muted class="h-full">
-                    <source :src="'/_nuxt/' + currentItem.url" type="video/mp4" />
-                </video>
-            </div>
-
         </div>
     </div>
 </template>
 
 <script setup>
+
 import {
     differenceInMonths,
     differenceInDays,
@@ -57,15 +62,14 @@ import {
     differenceInSeconds,
     parse,
 } from "date-fns"
-
-const { currentItem, reminder } = defineProps(["currentItem", "reminder"])
-
 const icon = ref("")
 const city = "Surabaya" // Default city
 const weatherDescription = ref("")
 const temperature = ref(0)
 const humidity = ref(0)
 const windSpeed = ref(0)
+const { currentItem, reminder } = defineProps(["currentItem", "reminder"])
+
 const reminderContainer = ref(null);
 const currentTime = ref("")
 
@@ -78,7 +82,6 @@ onMounted(() => {
         const seconds = now.getSeconds().toString().padStart(2, "0")
         currentTime.value = `${hours}:${minutes}:${seconds}`
     }
-
     fetchWeather() // Initial fetch
     updateTime() // Initial time
     autoScroll(); // Start auto-scrolling
@@ -138,7 +141,7 @@ function getFormattedTimeDifference(dateString) {
         const remainingMinutes = diffMinutes % 60
         const remainingSeconds = diffSeconds % 60
 
-        return `${remainingHours} h ${remainingMinutes} m ${remainingSeconds} s`
+        return `${remainingHours}j ${remainingMinutes}m ${remainingSeconds}d`
     }
 
     // If the difference is under a month, return the days remaining

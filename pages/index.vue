@@ -1,32 +1,33 @@
 <template>
-	<div class="h-screen flex flex-col justify-center items-center">
-		<div :class="template != 'template1' && template != 'template2' ? 'rotate-90 w-[100vh] h-[100vw]' : 'w-[100vw] h-[100vh]'"
+	<div class="h-screen w-screen flex justify-center items-center">
+		<div :class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'w-[100vw] h-[100vh]' : 'rotate-90 w-[100vh] h-[100vw] max-h-[100vw]'"
 			class="bg-gradient-to-r from-OnPrimaryContainer to-PrimaryContainer">
-			<marquee class="text-2xl text-OnPrimary bg-Primary h-[5vh] flex items-center"> Digital Signage ISTTS
-			</marquee>
 
 			<div v-if="template == 'loading'">Loading...</div>
-			<div v-else-if="template == 'template1'" class="relative flex flex-col justify-between">
-				<SlideShowDesign :currentItem="currentItem" />
-			</div>
-			<div v-else-if="template == 'template2'" class="relative flex flex-col justify-between">
-				<ThreeSection v-if="currentItem != '' && reminder != ''" :currentItem="currentItem"
-					:reminder="reminder" />
-			</div>
-			<div v-else-if="template == 'template3'" class="relative flex-col">
-				<ThreeContentPortrait v-if="currentItem != '' && reminder != ''" :currentItem="currentItem"
-					:reminder="reminder" />
-			</div>
-			<div v-else-if="template == 'template4'" class="relative flex-col">
-				<SlideShowPortrait :currentItem="currentItem" />
-			</div>
+			<SlideShowDesign v-else-if="template == 'template1'" :currentItem1="currentItem1" />
+			<ThreeSection v-else-if="template == 'template2'" :currentItem1="currentItem1" :reminder="reminder" />
+			<ThreeSlideShow v-else-if="template == 'template3'" :currentItem1="currentItem1"
+				:currentItem2="currentItem2" :currentItem3="currentItem3" />
+			<TwoSlideShow v-else-if="template == 'template4'" :currentItem1="currentItem1" :currentItem2="currentItem2"
+				:reminder="reminder" />
+			<SlideShowPortrait v-else-if="template == 'template5'" :currentItem1="currentItem1" />
+			<ThreeSectionPortrait v-else-if="template == 'template6'" :currentItem1="currentItem1"
+				:reminder="reminder" />
+			<ThreeSlideShowPortrait v-else-if="template == 'template7'" :currentItem1="currentItem1"
+				:currentItem2="currentItem2" :currentItem3="currentItem3" :reminder="reminder" />
+			<TwoSlideShowPortrait v-else-if="template == 'template8'" :currentItem1="currentItem1"
+				:currentItem2="currentItem2" :reminder="reminder" />
+
 			<div v-else>
 				<h1>NO TEMPLATE</h1>
 			</div>
-			<marquee class="bg-OnPrimaryContainer h-[5vh] flex">
+			<marquee
+				:class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'h-[5vh]' : 'h-[3vw]'"
+				class="bg-OnPrimaryContainer flex">
 				<div class="flex items-center">
-					<div class="text-lg text-PrimaryContainer">Digital Signage ISTTS</div>
-					<img src="/LogoISTTS.png" alt="" class="h-[5vh]" />
+					<div class="text-2xl text-PrimaryContainer">Digital Signage ISTTS</div>
+					<img src="/LogoISTTS.png" alt=""
+						:class="template != 'template1' && template != 'template2' && template != '' ? 'h-[3vw]' : 'h-[5vh]'" />
 				</div>
 			</marquee>
 
@@ -51,7 +52,8 @@
 <script setup>
 import { parse } from "date-fns"
 import { io } from "socket.io-client"
-const port = "3000"
+import ThreeSlideShow from "~/components/ThreeSlideShow.vue";
+const port = 3000
 const { getTemplate, setTemplate } = useTemplate()
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const template = ref(await getTemplate())
@@ -69,13 +71,14 @@ let unmuteInterval
 // SLIDE SHOW DESIGN VARIABLES
 const fileData = ref(await getFileList())
 const fileList = ref(fileData.value.data)
-const currentIndex = ref(0)
-const leaving = ref(false)
-const currentItem = ref("")
+
+const currentItem1 = ref("")
+const currentItem2 = ref("")
+const currentItem3 = ref("")
 // TWO SIDE DESIGN VARIABLES
 // THREE SIDE DESIGN VARIABLES
 
-const host = "http://192.168.7.220:3000/"
+const host = "http://192.168.0.190:3000/"
 // const host = "http://10.10.4.210:3000/"
 // const host = "http://localhost:3000/"
 const socket = io(host, {
@@ -151,7 +154,7 @@ socket.on("tes", (response) => {
 	console.log(response)
 })
 
-onMounted(() => {
+onMounted(async () => {
 	// EVENT TO SERVER
 	socket.on("connect", async () => {
 		socket.emit("clientType", routePath + ":" + port)
@@ -162,6 +165,7 @@ onMounted(() => {
 		socket.emit("resDataPlaylist", await getAllPlaylist())
 	})
 	playContent()
+	await changeReminderData()
 	// Load the YouTube Player API script dynamically
 	const tag = document.createElement("script")
 	tag.src = "https://www.youtube.com/iframe_api"
@@ -229,19 +233,45 @@ const selectVideo = (videoId) => {
 		unmuteWhenPlaying(youtubePlayer)
 	}
 }
-const playContent = async () => {
+// Play Single Content or Multiple Content
+async function loop1() {
 	while (template.value != "loading") {
-		for (const file of fileList.value) {
-			displayText(file.judul)
-			await delayWithLogging(2000)
-			for (const content of file.dataContent) {
-				currentIndex.value = file.dataContent.indexOf(content)
-				currentItem.value = content
-				// console.log(currentItem.value);
-				await delayWithLogging(file.duration * 1000)
+		if (fileList.value.filter((item) => item.screen == "A").length > 0) {
+			for (const file of fileList.value.filter((item) => item.screen == "A")) {
+				for (const content of file.dataContent) {
+					currentItem1.value = content
+					await delayWithLogging(file.duration * 1000)
+				}
 			}
 		}
 	}
+}
+async function loop2() {
+	while (template.value != "loading") {
+		if (fileList.value.filter((item) => item.screen == "B").length > 0) {
+			for (const file of fileList.value.filter((item) => item.screen == "B")) {
+				for (const content of file.dataContent) {
+					currentItem2.value = content
+					await delayWithLogging(file.duration * 1000)
+				}
+			}
+		}
+	}
+}
+async function loop3() {
+	while (template.value != "loading") {
+		if (fileList.value.filter((item) => item.screen == "C").length > 0) {
+			for (const file of fileList.value.filter((item) => item.screen == "C")) {
+				for (const content of file.dataContent) {
+					currentItem3.value = content
+					await delayWithLogging(file.duration * 1000)
+				}
+			}
+		}
+	}
+}
+const playContent = async () => {
+	await Promise.all([loop1(), loop2(), loop3()])
 }
 function delayWithLogging(ms) {
 	let seconds = 0

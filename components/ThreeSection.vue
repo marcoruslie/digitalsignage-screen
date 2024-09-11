@@ -1,7 +1,8 @@
 <template>
-	<div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer max-h-[90vh] h-[90vh] overflow-hidden">
+	<div v-if="currentItem1 != ''"
+		class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer h-[95vh] overflow-hidden">
 		<div class="flex justify-center items-center w-full">
-			<div class="flex flex-col h-[90vh] w-1/3 overflow-auto shadow-lg">
+			<div class="flex flex-col h-[95vh] w-1/3 overflow-auto shadow-lg">
 				<!-- Weather UI -->
 				<div
 					class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-between px-6 py-4">
@@ -16,6 +17,8 @@
 				<!-- Reminder -->
 				<div ref="reminderContainer"
 					class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex-col items-center bg-opacity-60 space-y-2 p-2 justify-center overflow-auto">
+					<div v-if="reminder.length == 0 || reminder == ''"
+						class="w-full h-full flex justify-center items-center text-OnPrimary">Tidak Ada Pengingat</div>
 					<div v-for="remind in reminder"
 						class="rounded text-OnPrimaryContainer w-full py-2 px-1 flex justify-between" :class="{
 							'bg-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
@@ -36,10 +39,10 @@
 				</div>
 			</div>
 
-			<div class="flex justify-center items-center h-[90vh] w-2/3 bg-black bg-opacity-10">
-				<img v-if="currentItem.type === 'image'" :src="'/_nuxt/' + currentItem.url" class="h-full" />
+			<div class="flex justify-center items-center h-[95vh] w-2/3 bg-black bg-opacity-10">
+				<img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="h-full" />
 				<video v-else autoplay muted class="h-full">
-					<source :src="'/_nuxt/' + currentItem.url" type="video/mp4" />
+					<source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
 				</video>
 			</div>
 		</div>
@@ -56,7 +59,7 @@ import {
 	parse,
 } from "date-fns"
 
-const { currentItem, reminder } = defineProps(["currentItem", "reminder"])
+const { currentItem1, reminder } = defineProps(["currentItem1", "reminder"])
 
 const icon = ref("")
 const city = "Surabaya" // Default city
