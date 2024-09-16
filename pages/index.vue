@@ -3,7 +3,10 @@
 		<div :class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'w-[100vw] h-[100vh]' : 'rotate-90 w-[100vh] h-[100vw] max-h-[100vw]'"
 			class="bg-gradient-to-r from-OnPrimaryContainer to-PrimaryContainer">
 
-			<div v-if="template == 'loading'">Loading...</div>
+			<div v-if="template == 'loading'"
+				:class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'h-[95vh]' : 'h-[97vw]'"
+				class="text-OnPrimary text-6xl flex justify-center items-center">
+				Tidak Ada Layout..</div>
 			<SlideShowDesign v-else-if="template == 'template1'" :currentItem1="currentItem1" />
 			<ThreeSection v-else-if="template == 'template2'" :currentItem1="currentItem1" :reminder="reminder" />
 			<ThreeSlideShow v-else-if="template == 'template3'" :currentItem1="currentItem1"
@@ -27,7 +30,7 @@
 				<div class="flex items-center">
 					<div class="text-2xl text-PrimaryContainer">Digital Signage ISTTS</div>
 					<img src="/LogoISTTS.png" alt=""
-						:class="template != 'template1' && template != 'template2' && template != '' ? 'h-[3vw]' : 'h-[5vh]'" />
+						:class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'h-[5vh]' : 'h-[3vw]'" />
 				</div>
 			</marquee>
 
@@ -238,37 +241,34 @@ const selectVideo = (videoId) => {
 }
 // Play Single Content or Multiple Content
 async function loop1() {
-	while (template.value != "loading") {
-		if (fileList.value.filter((item) => item.screen == "A").length > 0) {
-			for (const file of fileList.value.filter((item) => item.screen == "A")) {
-				for (const content of file.dataContent) {
-					currentItem1.value = content
-					await delayWithLogging(file.duration * 1000)
-				}
+	while (fileList.value.filter((item) => item.screen == "A").length > 0) {
+		const filteredFiles = fileList.value.filter((item) => item.screen == "A");
+		for (const file of filteredFiles) {
+			for (const content of file.dataContent) {
+				currentItem1.value = content;
+				await delayWithLogging(file.duration * 1000);
 			}
 		}
 	}
 }
 async function loop2() {
-	while (template.value != "loading") {
-		if (fileList.value.filter((item) => item.screen == "B").length > 0) {
-			for (const file of fileList.value.filter((item) => item.screen == "B")) {
-				for (const content of file.dataContent) {
-					currentItem2.value = content
-					await delayWithLogging(file.duration * 1000)
-				}
+	while (fileList.value.filter((item) => item.screen == "B").length > 0) {
+		const filteredFiles = fileList.value.filter((item) => item.screen == "B");
+		for (const file of filteredFiles) {
+			for (const content of file.dataContent) {
+				currentItem2.value = content;
+				await delayWithLogging(file.duration * 1000);
 			}
 		}
 	}
 }
 async function loop3() {
-	while (template.value != "loading") {
-		if (fileList.value.filter((item) => item.screen == "C").length > 0) {
-			for (const file of fileList.value.filter((item) => item.screen == "C")) {
-				for (const content of file.dataContent) {
-					currentItem3.value = content
-					await delayWithLogging(file.duration * 1000)
-				}
+	while (fileList.value.filter((item) => item.screen == "C").length > 0) {
+		const filteredFiles = fileList.value.filter((item) => item.screen == "C");
+		for (const file of filteredFiles) {
+			for (const content of file.dataContent) {
+				currentItem3.value = content;
+				await delayWithLogging(file.duration * 1000);
 			}
 		}
 	}
