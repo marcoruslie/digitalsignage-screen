@@ -13,18 +13,18 @@
                         <p class="text-2xl text-gray-200 mb-1">Kecepatan Angin: {{ windSpeed }} m/detik</p> -->
                 </div>
                 <div class="w-2/3 flex flex-col items-center justify-between">
-                    <img v-if="currentItem.type === 'image'" :src="'/_nuxt/' + currentItem.url" class="h-full" />
+                    <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="h-full" />
                     <video v-else autoplay muted class="h-full">
-                        <source :src="'/_nuxt/' + currentItem.url" type="video/mp4" />
+                        <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
                     </video>
                 </div>
             </div>
 
             <div class="flex justify-center items-center h-1/2 w-full bg-black bg-opacity-10">
                 <div class="w-2/3 flex flex-col items-center justify-between">
-                    <img v-if="currentItem.type === 'image'" :src="'/_nuxt/' + currentItem.url" class="h-full" />
+                    <img v-if="currentItem2.type === 'image'" :src="'/_nuxt/' + currentItem2.url" class="h-full" />
                     <video v-else autoplay muted class="h-full">
-                        <source :src="'/_nuxt/' + currentItem.url" type="video/mp4" />
+                        <source :src="'/_nuxt/' + currentItem2.url" type="video/mp4" />
                     </video>
                 </div>
                 <div ref="reminderContainer" class="w-1/3 flex flex-col items-center justify-center h-full space-y-2">
@@ -68,7 +68,7 @@ const weatherDescription = ref("")
 const temperature = ref(0)
 const humidity = ref(0)
 const windSpeed = ref(0)
-const { currentItem, reminder } = defineProps(["currentItem", "reminder"])
+const { currentItem1, currentItem2, reminder } = defineProps(["currentItem1", "currentItem2", "reminder"])
 
 const reminderContainer = ref(null);
 const currentTime = ref("")
