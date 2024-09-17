@@ -115,6 +115,7 @@ socket.on("receiveFiles", async (data) => {
 	console.log(data)
 
 	const result = await saveFile(data)
+	console.log(result)
 	if (result.status == "success") {
 		const dateString = data.date
 		const date = new Date(dateString)
@@ -126,6 +127,12 @@ socket.on("receiveFiles", async (data) => {
 
 		// Concatenate the day, month, and year without any separators
 		const formattedDate = `${day}${month}${year}`
+		const temp = {
+			oldName: template.value,
+			newName: data.template,
+		}
+		const templateRes = await setTemplate(temp)
+		console.log(templateRes)
 		const jsonResult = await changeJsonFile(`playlist/${formattedDate}`, "content.json", data.jsonData)
 		console.log(jsonResult)
 		if (jsonResult == "success") {
@@ -139,6 +146,7 @@ socket.on("receiveFiles", async (data) => {
 			})
 			router.go()
 		} else {
+			socket.emit("success", jsonResult)
 		}
 	}
 })
@@ -241,8 +249,8 @@ const selectVideo = (videoId) => {
 }
 // Play Single Content or Multiple Content
 async function loop1() {
-	while (fileList.value.filter((item) => item.screen == "A").length > 0) {
-		const filteredFiles = fileList.value.filter((item) => item.screen == "A");
+	while (fileList.value.filter((item) => item.screen.includes("A")).length > 0) {
+		const filteredFiles = fileList.value.filter((item) => item.screen.includes("A"));
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
 				currentItem1.value = content;
@@ -252,8 +260,8 @@ async function loop1() {
 	}
 }
 async function loop2() {
-	while (fileList.value.filter((item) => item.screen == "B").length > 0) {
-		const filteredFiles = fileList.value.filter((item) => item.screen == "B");
+	while (fileList.value.filter((item) => item.screen.includes("B")).length > 0) {
+		const filteredFiles = fileList.value.filter((item) => item.screen.includes("B"));
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
 				currentItem2.value = content;
@@ -263,8 +271,8 @@ async function loop2() {
 	}
 }
 async function loop3() {
-	while (fileList.value.filter((item) => item.screen == "C").length > 0) {
-		const filteredFiles = fileList.value.filter((item) => item.screen == "C");
+	while (fileList.value.filter((item) => item.screen.includes("C")).length > 0) {
+		const filteredFiles = fileList.value.filter((item) => item.screen.includes("C"));
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
 				currentItem3.value = content;
