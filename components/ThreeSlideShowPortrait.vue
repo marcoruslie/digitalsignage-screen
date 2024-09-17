@@ -22,7 +22,7 @@
             <!-- Konten 3 -->
             <div class="flex justify-center items-center h-1/2 w-full bg-black bg-opacity-10">
 
-                <div class="w-2/3 flex flex-col items-center justify-between">
+                <div class="w-2/3 h-full flex flex-col items-center justify-between">
                     <img v-if="currentItem3.type === 'image'" :src="'/_nuxt/' + currentItem3.url" class="h-full" />
                     <video v-else autoplay muted class="h-full">
                         <source :src="'/_nuxt/' + currentItem3.url" type="video/mp4" />
