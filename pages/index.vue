@@ -55,10 +55,9 @@
 <script setup>
 import { parse } from "date-fns"
 import { io } from "socket.io-client"
-import ThreeSlideShow from "~/components/ThreeSlideShow.vue";
 const port = 3000
-const { getTemplate, setTemplate } = useTemplate()
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
+const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())
 const youtubeId = ref(await getYoutubeMusic())
 const { getFileList, getAllPlaylist, getReminder, saveFile, changeJsonFile } = useFileData()
