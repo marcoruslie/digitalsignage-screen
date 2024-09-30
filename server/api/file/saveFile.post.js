@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
       if (!fs.existsSync(fileDir)) {
         fs.mkdirSync(fileDir, { recursive: true }); // Create the directory recursively
       }
+
       // Convert base64 string back to binary and save the file
       fs.writeFileSync(filePath, Buffer.from(fileData, "base64"));
     });
@@ -27,6 +28,8 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error("Error saving files:", error);
-    return error;
+    return {
+      status: "error",
+    };
   }
 });
