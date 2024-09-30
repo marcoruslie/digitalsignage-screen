@@ -38,9 +38,9 @@
             </div>
 
             <div class="flex justify-center items-center h-full bg-black bg-opacity-10">
-                <img v-if="currentItem.type === 'image'" :src="'/_nuxt/' + currentItem.url" class="h-full" />
+                <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="h-full" />
                 <video v-else autoplay muted class="h-full">
-                    <source :src="'/_nuxt/' + currentItem.url" type="video/mp4" />
+                    <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
                 </video>
             </div>
 
@@ -58,7 +58,7 @@ import {
     parse,
 } from "date-fns"
 
-const { currentItem, reminder } = defineProps(["currentItem", "reminder"])
+const { currentItem1, reminder } = defineProps(["currentItem1", "reminder"])
 
 const icon = ref("")
 const city = "Surabaya" // Default city
