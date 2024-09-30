@@ -29,10 +29,6 @@ export default () => {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to save files");
-      }
-
       console.log(response.json());
       return response.json();
     } catch (error) {
