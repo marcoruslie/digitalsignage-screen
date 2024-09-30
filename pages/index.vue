@@ -54,6 +54,7 @@
 
 <script setup>
 import { parse } from "date-fns"
+import { ca } from "date-fns/locale";
 import { io } from "socket.io-client"
 const port = 3000
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
@@ -112,8 +113,12 @@ socket.on("changeBgm", async (data) => {
 })
 socket.on("receiveFiles", async (data) => {
 	console.log(data)
-
-	const result = await saveFile(data)
+	let result
+	try {
+		result = await saveFile(data)
+	} catch (err) {
+		console.log(err.message)
+	}
 	console.log(result)
 	if (result.status == "success") {
 		const dateString = data.date
