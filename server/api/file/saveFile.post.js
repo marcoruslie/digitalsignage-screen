@@ -27,6 +27,6 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error) {
     console.error("Error saving files:", error);
-    return "error";
+    return error;
   }
 });

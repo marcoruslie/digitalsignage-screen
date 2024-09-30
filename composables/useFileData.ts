@@ -33,7 +33,7 @@ export default () => {
         throw new Error("Failed to save files");
       }
 
-      console.log(response);
+      console.log(response.json());
       return response.json();
     } catch (error) {
       console.error("Error saving files:", error);
