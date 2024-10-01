@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center items-center h-full bg-black bg-opacity-10 w-full">
+            <div class="flex justify-center items-center h-3/5 bg-black bg-opacity-10 w-full">
                 <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="h-full" />
                 <video v-else autoplay muted class="h-full">
                     <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
