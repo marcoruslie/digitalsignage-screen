@@ -56,7 +56,7 @@
 import { parse } from "date-fns"
 import { ca } from "date-fns/locale";
 import { io } from "socket.io-client"
-const port = 3000
+const port = 3001
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())

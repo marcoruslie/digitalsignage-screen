@@ -3,16 +3,14 @@
         <div class="flex flex-col justify-center items-center w-full h-full">
             <div class="flex justify-center items-center h-1/2 w-full overflow-auto shadow-lg">
                 <!-- Weather UI -->
-                <div class="w-1/3 flex flex-col items-center justify-between">
-                    <h2 class="sm:text-2xl lg:text-5xl font-semibold text-white mb-2">{{ city }}</h2>
-                    <img :src="icon" alt="" />
-                    <p class="sm:text-xl lg:text-3xl text-gray-200 mb-1">{{ weatherDescription.toUpperCase() }}</p>
-                    <p class="sm:text-3xl lg:text-6xl text-gray-200 mb-1">{{ temperature }}°C</p>
-                    <p class="sm:text-xl lg:text-4xl font-bold text-gray-200">{{ currentTime }} WIB</p>
-                    <!-- <p class="text-2xl text-gray-200 mb-1">Kelembapan: {{ humidity }}%</p>
-                        <p class="text-2xl text-gray-200 mb-1">Kecepatan Angin: {{ windSpeed }} m/detik</p> -->
+                <div class="w-full lg:w-1/3 p-4 flex flex-col items-center justify-evenly text-center">
+                    <h2 class="text-[5vw] lg:text-[2.5vw] font-semibold text-white mb-2">{{ city }}</h2>
+                    <img :src="icon" alt="Weather Icon" class="w-[30%] lg:w-[20%]" />
+                    <p class="text-[4vw] lg:text-[2vw] text-gray-200 mb-1">{{ weatherDescription.toUpperCase() }}</p>
+                    <p class="text-[7vw] lg:text-[4vw] text-gray-200">{{ temperature }}°C</p>
+                    <p class="text-[2.5vw] lg:text-[1.5vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
                 </div>
-                <div class="w-2/3 flex flex-col items-center justify-between">
+                <div class="w-2/3 flex flex-col items-center h-full justify-between">
                     <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="h-full" />
                     <video v-else autoplay muted class="h-full">
                         <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
@@ -21,32 +19,42 @@
             </div>
 
             <div class="flex justify-center items-center h-1/2 w-full bg-black bg-opacity-10">
-                <div class="w-2/3 flex flex-col items-center justify-between">
+                <div class="w-2/3 flex flex-col items-center justify-between h-full">
                     <img v-if="currentItem2.type === 'image'" :src="'/_nuxt/' + currentItem2.url" class="h-full" />
                     <video v-else autoplay muted class="h-full">
                         <source :src="'/_nuxt/' + currentItem2.url" type="video/mp4" />
                     </video>
                 </div>
-                <div ref="reminderContainer" class="w-1/3 flex flex-col items-center justify-center h-full space-y-2">
-                    <div v-for="remind in reminder"
-                        class="rounded text-OnPrimaryContainer w-full py-2 px-1 flex justify-between" :class="{
-                            'bg-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
-                            'bg-green-500': getTimeDifferenceInDays(remind.Deadline) > 30,
-                            'bg-yellow-500':
-                                getTimeDifferenceInDays(remind.Deadline) >= 1 &&
-                                getTimeDifferenceInDays(remind.Deadline) <= 30,
-                        }">
-                        <div class="flex-col flex w-[70%] ">
-                            <div class="text-xl font-bold">{{ remind.Judul }}</div>
-                            <div>{{ remind.Deadline }}</div>
+                <!-- Reminder Section -->
+                <div ref="reminderContainer"
+                    class="w-full lg:w-1/3 h-full flex items-center justify-center overflow-auto p-6">
+
+                    <div class="w-full space-y-4">
+                        <!-- Display if no reminders -->
+                        <div v-if="reminder.length === 0" class="text-center text-OnPrimary text-2xl">
+                            Tidak Ada Pengingat
                         </div>
-                        <div class="flex flex-col justify-center items-end">
-                            Sisa Waktu
-                            <div>{{ getFormattedTimeDifference(remind.Deadline) }}</div>
+
+                        <!-- Display reminders -->
+                        <div v-for="remind in reminder" :key="remind.id"
+                            class="rounded p-4 flex justify-between items-center shadow-md" :class="{
+                                'bg-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
+                                'bg-green-500': getTimeDifferenceInDays(remind.Deadline) > 30,
+                                'bg-yellow-500': getTimeDifferenceInDays(remind.Deadline) >= 1 &&
+                                    getTimeDifferenceInDays(remind.Deadline) <= 30
+                            }">
+                            <div class="flex flex-col w-[70%]">
+                                <div class="text-2xl font-bold">{{ remind.Judul }}</div>
+                                <div class="text-lg">{{ remind.Deadline }}</div>
+                            </div>
+                            <div class="flex flex-col items-end text-lg">
+                                <span>Sisa Waktu</span>
+                                <div>{{ getFormattedTimeDifference(remind.Deadline) }}</div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>

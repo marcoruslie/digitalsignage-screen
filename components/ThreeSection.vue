@@ -1,47 +1,50 @@
 <template>
-	<div v-if="currentItem1 != ''"
-		class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer h-[95vh] overflow-hidden">
-		<div class="flex justify-center items-center w-full">
-			<div class="flex flex-col h-[95vh] w-1/3 overflow-auto shadow-lg">
+	<div v-if="currentItem1" class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer h-[95vh] overflow-hidden">
+		<div class="flex flex-wrap lg:flex-nowrap justify-center items-center w-full h-full">
+			<!-- Left Section: Weather + Reminder -->
+			<div class="flex flex-col h-full w-full lg:w-1/3 overflow-auto shadow-lg">
 				<!-- Weather UI -->
 				<div
-					class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-between px-6 py-4">
-					<h2 class="sm:text-2xl lg:text-5xl font-semibold text-white mb-2">{{ city }}</h2>
-					<img :src="icon" alt="" />
-					<p class="sm:text-xl lg:text-3xl text-gray-200 mb-1">{{ weatherDescription.toUpperCase() }}</p>
-					<p class="sm:text-3xl lg:text-6xl text-gray-200 mb-1">{{ temperature }}°C</p>
-					<p class="sm:text-xl lg:text-4xl font-bold text-gray-200">{{ currentTime }} WIB</p>
-					<!-- <p class="text-2xl text-gray-200 mb-1">Kelembapan: {{ humidity }}%</p>
-                        <p class="text-2xl text-gray-200 mb-1">Kecepatan Angin: {{ windSpeed }} m/detik</p> -->
+					class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-evenly p-4">
+					<h2 class="text-[4vw] lg:text-[2.5vw] font-semibold text-white">{{ city }}</h2>
+					<img :src="icon" alt="Weather Icon" class="w-[30%] lg:w-[20%] mb-2" />
+					<p class="text-[3vw] lg:text-[2vw] text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
+					<p class="text-[6vw] lg:text-[4vw] text-gray-200">{{ temperature }}°C</p>
+					<p class="text-[2.5vw] lg:text-[2vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
 				</div>
-				<!-- Reminder -->
+
+				<!-- Reminder Section -->
 				<div ref="reminderContainer"
-					class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex-col items-center bg-opacity-60 space-y-2 p-2 justify-center overflow-auto">
-					<div v-if="reminder.length == 0 || reminder == ''"
-						class="w-full h-full flex justify-center items-center text-OnPrimary">Tidak Ada Pengingat</div>
-					<div v-for="remind in reminder"
-						class="rounded text-OnPrimaryContainer w-full py-2 px-1 flex justify-between" :class="{
+					class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary bg-opacity-60 space-y-2 p-4 overflow-auto">
+					<div v-if="!reminder.length"
+						class="w-full h-full flex justify-center items-center text-OnPrimary text-[2vw]">
+						Tidak Ada Pengingat
+					</div>
+
+					<div v-for="remind in reminder" :key="remind.id"
+						class="rounded w-full py-2 px-3 flex justify-between text-OnPrimaryContainer" :class="{
 							'bg-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
 							'bg-green-500': getTimeDifferenceInDays(remind.Deadline) > 30,
-							'bg-yellow-500':
-								getTimeDifferenceInDays(remind.Deadline) >= 1 &&
+							'bg-yellow-500': getTimeDifferenceInDays(remind.Deadline) >= 1 &&
 								getTimeDifferenceInDays(remind.Deadline) <= 30,
 						}">
-						<div class="flex-col flex w-[70%] ">
-							<div class="text-xl font-bold">{{ remind.Judul }}</div>
-							<div>{{ remind.Deadline }}</div>
+						<div class="flex-col flex w-[70%]">
+							<div class="text-[1.8vw] font-bold">{{ remind.Judul }}</div>
+							<div class="text-[1.2vw]">{{ remind.Deadline }}</div>
 						</div>
-						<div class="flex flex-col justify-center items-end">
-							Sisa Waktu
+						<div class="flex flex-col items-end text-[1.2vw]">
+							<span>Sisa Waktu</span>
 							<div>{{ getFormattedTimeDifference(remind.Deadline) }}</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="flex justify-center items-center h-[95vh] w-2/3 bg-black bg-opacity-10">
-				<img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="h-full" />
-				<video v-else autoplay muted class="h-full">
+			<!-- Right Section: Media Display -->
+			<div class="flex justify-center items-center h-full w-full lg:w-2/3 bg-black bg-opacity-10">
+				<img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url"
+					class="h-full object-contain" />
+				<video v-else autoplay muted loop class="max-h-full max-w-full object-contain">
 					<source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
 				</video>
 			</div>
