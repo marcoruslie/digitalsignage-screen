@@ -28,7 +28,7 @@
 				:class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'h-[5vh]' : 'h-[3vw]'"
 				class="bg-OnPrimaryContainer flex">
 				<div class="flex items-center">
-					<div class="text-2xl text-PrimaryContainer">Digital Signage ISTTS</div>
+					<div class="text-[1vw] text-PrimaryContainer">Digital Signage ISTTS</div>
 					<img src="/LogoISTTS.png" alt=""
 						:class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'h-[5vh]' : 'h-[3vw]'" />
 				</div>
@@ -56,7 +56,7 @@
 import { parse } from "date-fns"
 import { ca } from "date-fns/locale";
 import { io } from "socket.io-client"
-const port = 3000
+const port = 3001
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())

@@ -10,24 +10,25 @@
                     <p class="text-[7vw] lg:text-[4vw] text-gray-200">{{ temperature }}°C</p>
                     <p class="text-[2.5vw] lg:text-[1.5vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
                 </div>
-                <div class="w-2/3 flex flex-col items-center h-full justify-between">
-                    <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="h-full" />
-                    <video v-else autoplay muted class="h-full">
+                <div class="w-2/3 flex flex-col items-center h-full justify-center">
+                    <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url"
+                        class="h-full object-contain" />
+                    <video v-else autoplay muted class="object-contain h-full">
                         <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
                     </video>
                 </div>
             </div>
 
             <div class="flex justify-center items-center h-1/2 w-full bg-black bg-opacity-10">
-                <div class="w-2/3 flex flex-col items-center justify-between h-full">
-                    <img v-if="currentItem2.type === 'image'" :src="'/_nuxt/' + currentItem2.url" class="h-full" />
-                    <video v-else autoplay muted class="h-full">
+                <div class="w-2/3 flex flex-col items-center justify-center h-full">
+                    <img v-if="currentItem2.type === 'image'" :src="'/_nuxt/' + currentItem2.url"
+                        class="h-full object-contain" />
+                    <video v-else autoplay muted class="object-contain h-full">
                         <source :src="'/_nuxt/' + currentItem2.url" type="video/mp4" />
                     </video>
                 </div>
                 <!-- Reminder Section -->
-                <div ref="reminderContainer"
-                    class="w-full lg:w-1/3 h-full flex items-center justify-center overflow-auto p-6">
+                <div ref="reminderContainer" class="w-1/3 h-full flex items-center justify-center overflow-auto p-2">
 
                     <div class="w-full space-y-4">
                         <!-- Display if no reminders -->
@@ -37,17 +38,17 @@
 
                         <!-- Display reminders -->
                         <div v-for="remind in reminder" :key="remind.id"
-                            class="rounded p-4 flex justify-between items-center shadow-md" :class="{
+                            class="rounded p-2 flex justify-between items-center shadow-md " :class="{
                                 'bg-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
                                 'bg-green-500': getTimeDifferenceInDays(remind.Deadline) > 30,
                                 'bg-yellow-500': getTimeDifferenceInDays(remind.Deadline) >= 1 &&
                                     getTimeDifferenceInDays(remind.Deadline) <= 30
                             }">
-                            <div class="flex flex-col w-[70%]">
-                                <div class="text-2xl font-bold">{{ remind.Judul }}</div>
-                                <div class="text-lg">{{ remind.Deadline }}</div>
+                            <div class="flex-col flex w-[70%]">
+                                <div class="text-[0.8vw] font-bold">{{ remind.Judul }}</div>
+                                <div class="text-[0.8vw]">{{ remind.Deadline }}</div>
                             </div>
-                            <div class="flex flex-col items-end text-lg">
+                            <div class="flex flex-col items-end text-[0.75vw] text-center">
                                 <span>Sisa Waktu</span>
                                 <div>{{ getFormattedTimeDifference(remind.Deadline) }}</div>
                             </div>

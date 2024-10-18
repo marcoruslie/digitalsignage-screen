@@ -1,16 +1,15 @@
 <template>
-	<div v-if="currentItem1" class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer h-[95vh] overflow-hidden">
+	<div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer h-[95vh] overflow-hidden">
 		<div class="flex flex-wrap lg:flex-nowrap justify-center items-center w-full h-full">
 			<!-- Left Section: Weather + Reminder -->
 			<div class="flex flex-col h-full w-full lg:w-1/3 overflow-auto shadow-lg">
 				<!-- Weather UI -->
-				<div
-					class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-evenly p-4">
-					<h2 class="text-[4vw] lg:text-[2.5vw] font-semibold text-white">{{ city }}</h2>
-					<img :src="icon" alt="Weather Icon" class="w-[30%] lg:w-[20%] mb-2" />
-					<p class="text-[3vw] lg:text-[2vw] text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
-					<p class="text-[6vw] lg:text-[4vw] text-gray-200">{{ temperature }}°C</p>
-					<p class="text-[2.5vw] lg:text-[2vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
+				<div class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center p-4">
+					<h2 class="text-[2vw] font-semibold text-white">{{ city }}</h2>
+					<img :src="icon" alt="Weather Icon" class="w-[30%] mb-2" />
+					<p class="text-[2vw]  text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
+					<p class="text-[2vw]  text-gray-200">{{ temperature }}°C</p>
+					<p class="text-[2vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
 				</div>
 
 				<!-- Reminder Section -->
@@ -29,7 +28,7 @@
 								getTimeDifferenceInDays(remind.Deadline) <= 30,
 						}">
 						<div class="flex-col flex w-[70%]">
-							<div class="text-[1.8vw] font-bold">{{ remind.Judul }}</div>
+							<div class="text-[1.3vw] font-bold">{{ remind.Judul }}</div>
 							<div class="text-[1.2vw]">{{ remind.Deadline }}</div>
 						</div>
 						<div class="flex flex-col items-end text-[1.2vw]">
@@ -85,9 +84,10 @@ onMounted(() => {
 
 	fetchWeather() // Initial fetch
 	updateTime() // Initial time
-	autoScroll(); // Start auto-scrolling
 	setInterval(updateTime, 1000) // Update time every second
 	setInterval(fetchWeather, 1000 * 60 * 60) // Fetch weather every hour
+
+	autoScroll(); // Start auto-scrolling
 })
 // Fetch weather data
 async function fetchWeather() {

@@ -5,16 +5,18 @@
                 <!-- Konten 1 -->
                 <div
                     class="w-1/2 h-full bg-gradient-to-br from-OnPrimaryContainer to-Primary flex items-center justify-between">
-                    <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="w-full" />
-                    <video v-else autoplay muted class="w-full">
+                    <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url"
+                        class="h-full object-contain" />
+                    <video v-else autoplay muted class="h-full object-contain">
                         <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
                     </video>
                 </div>
                 <!-- Konten 2 -->
                 <div
                     class="w-1/2 h-full bg-gradient-to-br from-OnPrimaryContainer to-Primary flex items-center justify-center">
-                    <img v-if="currentItem2.type === 'image'" :src="'/_nuxt/' + currentItem2.url" class="w-full" />
-                    <video v-else autoplay muted class="w-full">
+                    <img v-if="currentItem2.type === 'image'" :src="'/_nuxt/' + currentItem2.url"
+                        class="h-full object-contain" />
+                    <video v-else autoplay muted class="h-full object-contain">
                         <source :src="'/_nuxt/' + currentItem2.url" type="video/mp4" />
                     </video>
                 </div>
@@ -23,20 +25,18 @@
             <div class="flex justify-center items-center h-1/2 w-full bg-black bg-opacity-10">
 
                 <div class="w-2/3 h-full flex flex-col items-center justify-between">
-                    <img v-if="currentItem3.type === 'image'" :src="'/_nuxt/' + currentItem3.url" class="h-full" />
-                    <video v-else autoplay muted class="h-full">
+                    <img v-if="currentItem3.type === 'image'" :src="'/_nuxt/' + currentItem3.url"
+                        class="h-full object-contain" />
+                    <video v-else autoplay muted class="h-full object-contain">
                         <source :src="'/_nuxt/' + currentItem3.url" type="video/mp4" />
                     </video>
                 </div>
-                <div class="w-1/3 flex flex-col items-center justify-between">
-                    <h2 class="sm:text-2xl lg:text-5xl font-semibold text-white mb-2">{{ city }}</h2>
-                    <img :src="icon" alt="" />
-                    <p class="sm:text-xl lg:text-3xl text-gray-200 mb-1 text-center">{{ weatherDescription.toUpperCase()
-                        }}</p>
-                    <p class="sm:text-3xl lg:text-6xl text-gray-200 mb-1">{{ temperature }}°C</p>
-                    <p class="sm:text-xl lg:text-4xl font-bold text-gray-200">{{ currentTime }} WIB</p>
-                    <!-- <p class="text-2xl text-gray-200 mb-1">Kelembapan: {{ humidity }}%</p>
-                        <p class="text-2xl text-gray-200 mb-1">Kecepatan Angin: {{ windSpeed }} m/detik</p> -->
+                <div class="w-1/3 flex flex-col items-center">
+                    <h2 class="text-[2vw] font-semibold text-white">{{ city }}</h2>
+                    <img :src="icon" alt="Weather Icon" class="w-[30%] mb-2" />
+                    <p class="text-[2vw] text-center text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
+                    <p class="text-[2vw]  text-gray-200">{{ temperature }}°C</p>
+                    <p class="text-[2vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
                 </div>
             </div>
         </div>

@@ -1,17 +1,15 @@
 <template>
     <div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer overflow-hidden w-[100vh] h-[97vw]">
         <div class="flex flex-col justify-center items-center w-full h-full">
-            <div class="flex w-full h-2/5 overflow-auto shadow-lg">
+            <div class="flex w-full h-2/6 overflow-auto shadow-lg">
                 <!-- Weather UI -->
                 <div
-                    class="w-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-between px-6 py-4">
-                    <h2 class="sm:text-2xl lg:text-5xl font-semibold text-white mb-2">{{ city }}</h2>
-                    <img :src="icon" alt="" />
-                    <p class="sm:text-xl lg:text-3xl text-gray-200 mb-1">{{ weatherDescription.toUpperCase() }}</p>
-                    <p class="sm:text-3xl lg:text-6xl text-gray-200 mb-1">{{ temperature }}°C</p>
-                    <p class="sm:text-xl lg:text-4xl font-bold text-gray-200">{{ currentTime }} WIB</p>
-                    <!-- <p class="text-2xl text-gray-200 mb-1">Kelembapan: {{ humidity }}%</p>
-                        <p class="text-2xl text-gray-200 mb-1">Kecepatan Angin: {{ windSpeed }} m/detik</p> -->
+                    class="w-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center px-6 py-4 justify-center">
+                    <h2 class="text-[2vw] font-semibold text-white">{{ city }}</h2>
+                    <img :src="icon" alt="Weather Icon" class="w-[30%] mb-2" />
+                    <p class="text-[2vw]  text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
+                    <p class="text-[2vw]  text-gray-200">{{ temperature }}°C</p>
+                    <p class="text-[2vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
                 </div>
 
                 <!-- Reminder -->
@@ -25,21 +23,22 @@
                                 getTimeDifferenceInDays(remind.Deadline) >= 1 &&
                                 getTimeDifferenceInDays(remind.Deadline) <= 30,
                         }">
-                        <div class="flex-col flex w-[70%] ">
-                            <div class="text-xl font-bold">{{ remind.Judul }}</div>
-                            <div>{{ remind.Deadline }}</div>
+                        <div class="flex-col flex w-[70%]">
+                            <div class="text-[1.3vw] font-bold">{{ remind.Judul }}</div>
+                            <div class="text-[1.2vw]">{{ remind.Deadline }}</div>
                         </div>
-                        <div class="flex flex-col justify-center items-end">
-                            Sisa Waktu
+                        <div class="flex flex-col items-end text-[1.3vw]">
+                            <span>Sisa Waktu</span>
                             <div>{{ getFormattedTimeDifference(remind.Deadline) }}</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-center items-center h-3/5 bg-black bg-opacity-10 w-full">
-                <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="h-full" />
-                <video v-else autoplay muted class="h-full">
+            <div class="flex justify-center items-center h-4/6 bg-black bg-opacity-10 w-full">
+                <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url"
+                    class="h-full object-contain" />
+                <video v-else autoplay muted class="h-full object-contain">
                     <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
                 </video>
             </div>
