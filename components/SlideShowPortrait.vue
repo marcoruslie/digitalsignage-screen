@@ -1,9 +1,8 @@
 <template>
-    <div
-        class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer overflow-hidden h-[97vw] w-[100vh] flex justify-center items-center">
+    <div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer overflow-hidden h-[97vw] w-[100vh] flex justify-center items-center"
+        @click="unmuteVideo">
         <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="w-full" />
-        <video v-else-if="currentItem1.type === 'video'" autoplay controls playsinline class="h-full"
-            @canplay="playVideo">
+        <video v-else-if="currentItem1.type === 'video'" ref="video" autoplay muted playsinline controls class="h-full">
             <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
         </video>
     </div>
@@ -11,10 +10,13 @@
 
 <script setup>
 const { currentItem1 } = defineProps(["currentItem1"])
-const playVideo = (event) => {
-    const video = event.target;
-    video.play().catch((error) => {
-        console.warn("Autoplay blocked:", error);
-    });
+
+const video = ref(null);
+
+const unmuteVideo = () => {
+    if (video.value) {
+        video.value.muted = false; // Unmute video
+        video.value.play(); // Ensure playback continues
+    }
 };
 </script>
