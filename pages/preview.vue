@@ -56,7 +56,7 @@
 import { parse } from "date-fns"
 const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())
-const { getFileList, getReminder } = useFileData()
+const { getFileList, getAllPlaylist, getReminder, saveFile, changeJsonFile } = useFileData()
 const reminder = ref(await getReminder())
 if (reminder.value != null || reminder.value.length > 0) {
 	reminder.value = reminder.value.sort((a, b) => {
