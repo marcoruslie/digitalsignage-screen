@@ -56,6 +56,7 @@
 import { parse } from "date-fns"
 import { ca } from "date-fns/locale";
 import { io } from "socket.io-client"
+const contentVideoCheck = ref(false)
 const port = 3000
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const { getTemplate, setTemplate } = useTemplate()
@@ -251,6 +252,18 @@ const selectVideo = (videoId) => {
 		unmuteWhenPlaying(youtubePlayer)
 	}
 }
+const isNotVideo = (item) => {
+	return !item || item.type !== 'video'; // Checks for empty or non-video type
+};
+const checkAndPlayMusic = () => {
+	if (isNotVideo(currentItem1.value) &&
+		isNotVideo(currentItem2.value) &&
+		isNotVideo(currentItem3.value)) {
+		youtubePlayer.playVideo();
+	} else {
+		youtubePlayer.pauseVideo();
+	}
+};
 // Play Single Content or Multiple Content
 async function loop1() {
 	while (fileList.value.filter((item) => item.screen.includes("A")).length > 0) {
@@ -258,6 +271,7 @@ async function loop1() {
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
 				currentItem1.value = content;
+				checkAndPlayMusic();
 				await delayWithLogging(file.duration * 1000);
 			}
 		}
@@ -268,7 +282,9 @@ async function loop2() {
 		const filteredFiles = fileList.value.filter((item) => item.screen.includes("B"));
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
+
 				currentItem2.value = content;
+				checkAndPlayMusic();
 				await delayWithLogging(file.duration * 1000);
 			}
 		}
@@ -279,7 +295,9 @@ async function loop3() {
 		const filteredFiles = fileList.value.filter((item) => item.screen.includes("C"));
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
+
 				currentItem3.value = content;
+				checkAndPlayMusic();
 				await delayWithLogging(file.duration * 1000);
 			}
 		}
