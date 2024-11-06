@@ -59,7 +59,7 @@ import { io } from "socket.io-client"
 
 import eventBus from "~/composables/useBus";
 const contentVideoCheck = ref(false)
-const port = 3001
+const port = 3000
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())
