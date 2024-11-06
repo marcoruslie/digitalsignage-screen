@@ -59,7 +59,7 @@ import { io } from "socket.io-client"
 
 import eventBus from "~/composables/useBus";
 const contentVideoCheck = ref(false)
-const port = 3001
+const port = 3000
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())
@@ -87,8 +87,8 @@ const currentItem3 = ref("")
 // TWO SIDE DESIGN VARIABLES
 // THREE SIDE DESIGN VARIABLES
 
-// const host = "http://192.168.9.203/"
-const host = "http://192.168.0.190:3000/"
+const host = "http://192.168.9.203/"
+// const host = "http://192.168.0.190:3000/"
 // const host = "http://localhost:3000/"
 const socket = io(host, {
 	path: "/api/socket.io",
