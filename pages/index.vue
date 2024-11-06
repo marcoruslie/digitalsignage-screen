@@ -59,7 +59,7 @@ import { io } from "socket.io-client"
 
 import eventBus from "~/composables/useBus";
 const contentVideoCheck = ref(false)
-const port = 3001
+const port = 3000
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())
@@ -262,6 +262,9 @@ const checkAndPlayMusic = () => {
 	if (isNotVideo(currentItem1.value) &&
 		isNotVideo(currentItem2.value) &&
 		isNotVideo(currentItem3.value)) {
+		console.log(isNotVideo(currentItem1.value))
+		console.log(isNotVideo(currentItem2.value))
+		console.log(isNotVideo(currentItem3.value))
 		if (youtubePlayer && youtubePlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
 			youtubePlayer.mute()
 			youtubePlayer.playVideo()
@@ -279,8 +282,10 @@ async function loop1() {
 		const filteredFiles = fileList.value.filter((item) => item.screen.includes("A"));
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
+				await delayWithLogging(100)
 				currentItem1.value = content;
 				checkAndPlayMusic();
+				console.log(currentItem1.value)
 				if (content.type === "image") {
 					await delayWithLogging(file.duration * 1000);
 				}
@@ -288,6 +293,7 @@ async function loop1() {
 					await new Promise(resolve => {
 						eventBus.on('videoEnded', () => {
 							resolve();
+							currentItem1.value = "";
 						});
 					});
 				}
@@ -300,7 +306,7 @@ async function loop2() {
 		const filteredFiles = fileList.value.filter((item) => item.screen.includes("B"));
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
-
+				await delayWithLogging(100)
 				currentItem2.value = content;
 				checkAndPlayMusic();
 				if (content.type === "image") {
@@ -310,6 +316,7 @@ async function loop2() {
 					await new Promise(resolve => {
 						eventBus.on('videoEnded', () => {
 							resolve();
+							currentItem2.value = "";
 						});
 					});
 				}
@@ -322,7 +329,7 @@ async function loop3() {
 		const filteredFiles = fileList.value.filter((item) => item.screen.includes("C"));
 		for (const file of filteredFiles) {
 			for (const content of file.dataContent) {
-
+				await delayWithLogging(100)
 				currentItem3.value = content;
 				checkAndPlayMusic();
 				if (content.type === "image") {
@@ -332,6 +339,7 @@ async function loop3() {
 					await new Promise(resolve => {
 						eventBus.on('videoEnded', () => {
 							resolve();
+							currentItem3.value = "";
 						});
 					});
 				}
