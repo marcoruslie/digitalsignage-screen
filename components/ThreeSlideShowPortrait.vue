@@ -32,8 +32,9 @@
                     <div class="flex-1 w-full overflow-hidden">
                         <img v-if="currentItem2.type === 'image'" :src="'/_nuxt/' + currentItem2.url"
                             class="w-full h-full object-contain" />
-                        <video v-else-if="currentItem2.type === 'video'" ref="video" autoplay controls muted playsinline
-                            class="w-full h-full object-contain" @playing="unmuteVideo2" @ended="videoEnded">
+                        <video v-else-if="currentItem2.type === 'video'" ref="video2" autoplay controls muted
+                            playsinline class="w-full h-full object-contain" @playing="unmuteVideo2"
+                            @ended="videoEnded">
                             <source :src="'/_nuxt/' + currentItem2.url" type="video/mp4" />
                         </video>
                     </div>
@@ -52,8 +53,9 @@
                     <div class="flex-1 w-full overflow-hidden">
                         <img v-if="currentItem3.type === 'image'" :src="'/_nuxt/' + currentItem3.url"
                             class="w-full h-full object-contain" />
-                        <video v-else-if="currentItem3.type === 'video'" ref="video" autoplay controls muted playsinline
-                            class="w-full h-full object-contain" @playing="unmuteVideo3" @ended="videoEnded">
+                        <video v-else-if="currentItem3.type === 'video'" ref="video3" autoplay controls muted
+                            playsinline class="w-full h-full object-contain" @playing="unmuteVideo3"
+                            @ended="videoEnded">
                             <source :src="'/_nuxt/' + currentItem3.url" type="video/mp4" />
                         </video>
                     </div>
