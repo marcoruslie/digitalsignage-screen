@@ -2,7 +2,7 @@
 	<div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer h-[95vh] overflow-hidden">
 		<div class="flex flex-wrap lg:flex-nowrap justify-center items-center w-full h-full">
 			<!-- Left Section: Weather + Reminder -->
-			<div class="flex flex-col h-full w-full lg:w-1/3 overflow-auto shadow-lg">
+			<div class="flex flex-col h-full w-1/3 overflow-auto shadow-lg">
 				<!-- Weather UI -->
 				<div class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center p-4">
 					<h2 class="text-[2vw] font-semibold text-white">{{ city }}</h2>
@@ -40,12 +40,22 @@
 			</div>
 
 			<!-- Right Section: Media Display -->
-			<div class="flex justify-center items-center h-full w-full lg:w-2/3 bg-black bg-opacity-10">
-				<img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url"
-					class="h-full object-contain" />
-				<video v-else autoplay muted loop class="max-h-full max-w-full object-contain">
-					<source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
-				</video>
+			<div class="flex flex-col justify-center items-center h-full w-2/3 bg-black bg-opacity-10">
+				<div
+					class="flex bg-black bg-opacity-20 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+					{{
+						currentItem1.title ?
+							currentItem1.title : 'TIDAK ADA JUDUL' }}
+				</div>
+				<div class="flex-1 w-full overflow-hidden">
+					<img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url"
+						class="w-full h-full object-contain" />
+					<video v-else-if="currentItem1.type === 'video'" ref="video" autoplay controls muted playsinline
+						class="w-full h-full object-contain" @playing="unmuteVideo" @ended="videoEnded">
+						<source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
+					</video>
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -71,7 +81,20 @@ const humidity = ref(0)
 const windSpeed = ref(0)
 const reminderContainer = ref(null);
 const currentTime = ref("")
+import eventBus from '~/composables/useBus';
+const video = ref(null);
 
+const videoEnded = () => {
+	eventBus.emit('videoEnded');
+};
+const unmuteVideo = () => {
+	if (video.value) {
+		video.value.muted = false; // Unmute the video
+		video.value.play().catch((error) => {
+			console.warn("Playback error:", error);
+		}); // Ensure playback continues
+	}
+};
 onMounted(() => {
 	// Update current time every second
 	function updateTime() {

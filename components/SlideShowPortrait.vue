@@ -1,19 +1,31 @@
 <template>
     <div
-        class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer overflow-hidden h-[97vw] w-[100vh] flex justify-center items-center">
-        <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url" class="w-full" />
-        <video v-else-if="currentItem1.type === 'video'" ref="video" autoplay controls muted playsinline class="h-full"
-            @playing="unmuteVideo">
-            <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
-        </video>
+        class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer overflow-hidden h-[97vw] w-[100vh] flex flex-col justify-center items-center">
+        <div
+            class="flex bg-black bg-opacity-20 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+            {{
+                currentItem1.title ?
+                    currentItem1.title : 'TIDAK ADA JUDUL' }}
+        </div>
+        <div class="flex-1 w-full overflow-hidden">
+            <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url"
+                class="w-full h-full object-contain" />
+            <video v-else-if="currentItem1.type === 'video'" ref="video" autoplay controls muted playsinline
+                class="w-full h-full object-contain" @playing="unmuteVideo" @ended="videoEnded">
+                <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
+            </video>
+        </div>
     </div>
 </template>
 
 <script setup>
 const { currentItem1 } = defineProps(["currentItem1"])
-
+import eventBus from '~/composables/useBus';
 const video = ref(null);
 
+const videoEnded = () => {
+    eventBus.emit('videoEnded');
+};
 const unmuteVideo = () => {
     if (video.value) {
         video.value.muted = false; // Unmute the video

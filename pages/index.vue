@@ -56,8 +56,10 @@
 import { parse } from "date-fns"
 import { ca } from "date-fns/locale";
 import { io } from "socket.io-client"
+
+import eventBus from "~/composables/useBus";
 const contentVideoCheck = ref(false)
-const port = 3000
+const port = 3001
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())
@@ -216,9 +218,10 @@ const createPlayer = () => {
 		},
 	})
 }
-const onPlayerReady = (event) => {
+const onPlayerReady = async (event) => {
+	await delayWithLogging(2000)
 	event.target.loadVideoById(youtubeId.value)
-	event.target.playVideo()
+	checkAndPlayMusic();
 	unmuteWhenPlaying(event.target)
 }
 
@@ -259,9 +262,15 @@ const checkAndPlayMusic = () => {
 	if (isNotVideo(currentItem1.value) &&
 		isNotVideo(currentItem2.value) &&
 		isNotVideo(currentItem3.value)) {
-		youtubePlayer.playVideo();
+		if (youtubePlayer && youtubePlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+			youtubePlayer.mute()
+			youtubePlayer.playVideo()
+			unmuteWhenPlaying(youtubePlayer)
+		}
 	} else {
-		youtubePlayer.pauseVideo();
+		if (youtubePlayer) {
+			youtubePlayer.pauseVideo();
+		}
 	}
 };
 // Play Single Content or Multiple Content
@@ -272,7 +281,16 @@ async function loop1() {
 			for (const content of file.dataContent) {
 				currentItem1.value = content;
 				checkAndPlayMusic();
-				await delayWithLogging(file.duration * 1000);
+				if (content.type === "image") {
+					await delayWithLogging(file.duration * 1000);
+				}
+				else {
+					await new Promise(resolve => {
+						eventBus.on('videoEnded', () => {
+							resolve();
+						});
+					});
+				}
 			}
 		}
 	}
@@ -285,7 +303,16 @@ async function loop2() {
 
 				currentItem2.value = content;
 				checkAndPlayMusic();
-				await delayWithLogging(file.duration * 1000);
+				if (content.type === "image") {
+					await delayWithLogging(file.duration * 1000);
+				}
+				else {
+					await new Promise(resolve => {
+						eventBus.on('videoEnded', () => {
+							resolve();
+						});
+					});
+				}
 			}
 		}
 	}
@@ -298,7 +325,16 @@ async function loop3() {
 
 				currentItem3.value = content;
 				checkAndPlayMusic();
-				await delayWithLogging(file.duration * 1000);
+				if (content.type === "image") {
+					await delayWithLogging(file.duration * 1000);
+				}
+				else {
+					await new Promise(resolve => {
+						eventBus.on('videoEnded', () => {
+							resolve();
+						});
+					});
+				}
 			}
 		}
 	}
@@ -311,7 +347,6 @@ function delayWithLogging(ms) {
 	return new Promise((resolve) => {
 		const interval = setInterval(() => {
 			seconds++
-			// console.log(`Elapsed time: ${seconds} seconds`);
 		}, 1000)
 		setTimeout(() => {
 			clearInterval(interval)
