@@ -26,11 +26,12 @@
 			</div>
 			<marquee
 				:class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'h-[5vh]' : 'h-[3vw]'"
-				class="bg-OnPrimaryContainer flex">
-				<div class="flex items-center">
-					<div class="text-[1vw] text-PrimaryContainer">Digital Signage ISTTS</div>
+				class="bg-OnPrimaryContainer flex items-center">
+				<div class="flex items-center justify-center">
+					<div class="text-[1.8vw] text-white">DIGITAL SIGNAGE ISTTS</div>
 					<img src="/LogoISTTS.png" alt=""
-						:class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'h-[5vh]' : 'h-[3vw]'" />
+						:class="['template1', 'template2', 'template3', 'template4', 'loading'].includes(template) ? 'h-[4vh]' : 'h-[2vw]'"
+						class="object-contain" />
 				</div>
 			</marquee>
 
@@ -53,21 +54,22 @@
 </template>
 
 <script setup>
-import { parse } from "date-fns"
+import { parse, isAfter, isToday, isBefore } from "date-fns"
 import { ca } from "date-fns/locale";
 import { io } from "socket.io-client"
 
 import eventBus from "~/composables/useBus";
 const contentVideoCheck = ref(false)
-const port = 3000
+const port = 3001
 const { getYoutubeMusic, setYoutubeMusic } = useYoutube()
 const { getTemplate, setTemplate } = useTemplate()
 const template = ref(await getTemplate())
 const youtubeId = ref(await getYoutubeMusic())
-const { getFileList, getAllPlaylist, getReminder, saveFile, changeJsonFile } = useFileData()
-const reminder = ref(await getReminder())
+const { getFileList, getAllPlaylist, getReminder, saveFile, changeJsonFile, getAllReminder } = useFileData()
+const reminder = ref(await getAllReminder())
 console.log(reminder.value.length)
 if (reminder.value != null || reminder.value.length > 0) {
+
 	reminder.value = reminder.value.sort((a, b) => {
 		return new Date(a.Deadline) - new Date(b.Deadline)
 	})
@@ -87,9 +89,9 @@ const currentItem3 = ref("")
 // TWO SIDE DESIGN VARIABLES
 // THREE SIDE DESIGN VARIABLES
 
-const host = "http://192.168.9.203/"
+// const host = "http://192.168.9.203/"
 // const host = "http://192.168.0.190:3000/"
-// const host = "http://localhost:3000/"
+const host = "http://localhost:3000/"
 const socket = io(host, {
 	path: "/api/socket.io",
 })
@@ -166,7 +168,7 @@ socket.on("sendPlaylist", async () => {
 	socket.emit("resPlaylist", await getAllPlaylist())
 })
 socket.on("sendDataReminder", async () => {
-	socket.emit("resDataReminder", await getReminder())
+	socket.emit("resDataReminder", await getAllReminder())
 })
 socket.on("sendDataFiles", async () => {
 	socket.emit("resDataFiles", fileData.value.playlist_id)
@@ -180,7 +182,7 @@ onMounted(async () => {
 	socket.on("connect", async () => {
 		socket.emit("clientType", routePath + ":" + port)
 		socket.emit("musicId", youtubeId.value)
-		socket.emit("resDataReminder", await getReminder())
+		socket.emit("resDataReminder", await getAllReminder())
 	})
 	socket.on("reqDataPlaylist", async () => {
 		socket.emit("resDataPlaylist", await getAllPlaylist())

@@ -3,7 +3,7 @@
         <div class="flex justify-center items-center w-full">
             <div class="flex flex-col justify-center items-center h-[95vh] w-1/2">
                 <div
-                    class="flex bg-black bg-opacity-40 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+                    class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.6vw] font-medium w-full text-center py-1">
                     {{
                         currentItem1.title ?
                             currentItem1.title : 'TIDAK ADA JUDUL' }}
@@ -18,9 +18,9 @@
                 </div>
             </div>
 
-            <div class="flex flex-col justify-center items-center h-[95vh] w-1/2 bg-black bg-opacity-10">
+            <div class="flex flex-col justify-center items-center h-[95vh] w-1/2 shadow-md">
                 <div
-                    class="flex bg-black bg-opacity-40 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+                    class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.6vw] font-medium w-full text-center py-1">
                     {{
                         currentItem2.title ?
                             currentItem2.title : 'TIDAK ADA JUDUL' }}

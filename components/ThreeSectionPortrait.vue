@@ -1,35 +1,33 @@
 <template>
     <div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer overflow-hidden w-[100vh] h-[97vw]">
         <div class="flex flex-col justify-center items-center w-full h-full">
-            <div class="flex w-full h-2/6 overflow-auto shadow-lg">
+            <div class="flex w-full h-2/6 overflow-auto shadow-lg bg-gradient-to-tl from-Primary to-OnPrimaryContainer">
                 <!-- Weather UI -->
-                <div
-                    class="w-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center px-6 py-4 justify-center">
-                    <h2 class="text-[2vw] font-semibold text-white">{{ city }}</h2>
-                    <img :src="icon" alt="Weather Icon" class="w-[30%] mb-2" />
-                    <p class="text-[2vw]  text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
+                <div class="w-1/2 flex flex-col items-center px-6 py-4 justify-center">
+                    <h2 class="text-[2vw] font-semibold text-white">{{ city.toUpperCase() }}</h2>
+                    <p class="text-[2vw] text-gray-200">{{ currentTime }} WIB</p>
+                    <img :src="icon" alt="Weather Icon" class="w-[35%] mb-2" />
                     <p class="text-[2vw]  text-gray-200">{{ temperature }}°C</p>
-                    <p class="text-[2vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
+                    <p class="text-[2vw]  text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
                 </div>
 
                 <!-- Reminder -->
                 <div ref="reminderContainer"
-                    class="w-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex-col items-center bg-opacity-60 space-y-2 p-2 justify-center overflow-auto">
-                    <div v-for="remind in reminder"
-                        class="rounded text-OnPrimaryContainer w-full py-2 px-1 flex justify-between" :class="{
-                            'bg-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
-                            'bg-green-500': getTimeDifferenceInDays(remind.Deadline) > 30,
-                            'bg-yellow-500':
-                                getTimeDifferenceInDays(remind.Deadline) >= 1 &&
-                                getTimeDifferenceInDays(remind.Deadline) <= 30,
-                        }">
+                    class="w-1/2 flex-col items-center bg-opacity-60 space-y-2 p-2 justify-center overflow-auto">
+                    <div v-for="remind in reminder" :key="remind.id"
+                        class="rounded-2xl w-full py-2 px-3 flex justify-between bg-white">
                         <div class="flex-col flex w-[70%]">
                             <div class="text-[1.3vw] font-bold">{{ remind.Judul }}</div>
-                            <div class="text-[1.2vw]">{{ remind.Deadline }}</div>
+                            <div class="text-[1.2vw] italic font-bold">{{ remind.Deadline }}</div>
                         </div>
-                        <div class="flex flex-col items-end text-[1.3vw]">
+                        <div class="flex flex-col items-center text-[1.2vw]">
                             <span>Sisa Waktu</span>
-                            <div>{{ getFormattedTimeDifference(remind.Deadline) }}</div>
+                            <div class="font-bold" :class="{
+                                'text-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
+                                'text-green-500': getTimeDifferenceInDays(remind.Deadline) > 30,
+                                'text-yellow-500': getTimeDifferenceInDays(remind.Deadline) >= 1 &&
+                                    getTimeDifferenceInDays(remind.Deadline) <= 30,
+                            }">{{ getFormattedTimeDifference(remind.Deadline) }}</div>
                         </div>
                     </div>
                 </div>

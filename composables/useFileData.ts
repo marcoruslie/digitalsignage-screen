@@ -18,6 +18,10 @@ export default () => {
     const reminder = await $fetch("/api/file/getReminderFile");
     return reminder;
   };
+  const getAllReminder = async () => {
+    const reminder = await $fetch("/api/file/getAllReminderFile");
+    return reminder;
+  };
   const getAllPlaylist = async () => {
     const allPlaylist = await $fetch("/api/file/getAllFile");
     return allPlaylist;
@@ -63,5 +67,6 @@ export default () => {
     getReminder,
     saveFile,
     changeJsonFile,
+    getAllReminder,
   };
 };

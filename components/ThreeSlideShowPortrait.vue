@@ -3,10 +3,9 @@
         <div class="flex flex-col justify-center items-center h-full w-full">
             <div class="flex w-full h-1/2 justify-center items-center">
                 <!-- Konten 1 -->
-                <div
-                    class="w-1/2 h-full bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-between">
+                <div class="w-1/2 h-full flex flex-col items-center justify-between">
                     <div
-                        class="flex bg-black bg-opacity-20 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+                        class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
                         {{
                             currentItem1.title ?
                                 currentItem1.title : 'TIDAK ADA JUDUL' }}
@@ -21,10 +20,9 @@
                     </div>
                 </div>
                 <!-- Konten 2 -->
-                <div
-                    class="w-1/2 h-full bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-center">
+                <div class="w-1/2 h-full flex flex-col items-center justify-center">
                     <div
-                        class="flex bg-black bg-opacity-20 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+                        class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
                         {{
                             currentItem2.title ?
                                 currentItem2.title : 'TIDAK ADA JUDUL' }}
@@ -41,11 +39,11 @@
                 </div>
             </div>
             <!-- Konten 3 -->
-            <div class="flex justify-center items-center h-1/2 w-full bg-black bg-opacity-10">
+            <div class="flex justify-center items-center h-1/2 w-full shadow-2xl">
 
                 <div class="w-2/3 h-full flex flex-col items-center justify-between">
                     <div
-                        class="flex bg-black bg-opacity-20 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+                        class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
                         {{
                             currentItem3.title ?
                                 currentItem3.title : 'TIDAK ADA JUDUL' }}
@@ -60,12 +58,12 @@
                         </video>
                     </div>
                 </div>
-                <div class="w-1/3 flex flex-col items-center">
-                    <h2 class="text-[2vw] font-semibold text-white">{{ city }}</h2>
-                    <img :src="icon" alt="Weather Icon" class="w-[30%] mb-2" />
-                    <p class="text-[2vw] text-center text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
+                <div class="w-1/3 shadow-2xl h-full flex flex-col items-center justify-center">
+                    <h2 class="text-[2vw] font-semibold text-white">{{ city.toUpperCase() }}</h2>
+                    <p class="text-[2vw] text-gray-200">{{ currentTime }} WIB</p>
+                    <img :src="icon" alt="Weather Icon" class="w-[35%] mb-2" />
                     <p class="text-[2vw]  text-gray-200">{{ temperature }}°C</p>
-                    <p class="text-[2vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
+                    <p class="text-[2vw]  text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
                 </div>
             </div>
         </div>

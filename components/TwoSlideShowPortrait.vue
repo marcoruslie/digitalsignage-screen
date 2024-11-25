@@ -4,11 +4,11 @@
             <div class="flex justify-center items-center h-1/2 w-full overflow-auto shadow-lg">
                 <!-- Weather UI -->
                 <div class="w-full lg:w-1/3 p-4 flex flex-col items-center justify-evenly text-center">
-                    <h2 class="text-[5vw] lg:text-[2.5vw] font-semibold text-white mb-2">{{ city }}</h2>
-                    <img :src="icon" alt="Weather Icon" class="w-[30%] lg:w-[20%]" />
-                    <p class="text-[4vw] lg:text-[2vw] text-gray-200 mb-1">{{ weatherDescription.toUpperCase() }}</p>
-                    <p class="text-[7vw] lg:text-[4vw] text-gray-200">{{ temperature }}°C</p>
-                    <p class="text-[2.5vw] lg:text-[1.5vw] font-bold text-gray-200">{{ currentTime }} WIB</p>
+                    <h2 class="text-[2vw] font-semibold text-white">{{ city.toUpperCase() }}</h2>
+                    <p class="text-[2vw] text-gray-200">{{ currentTime }} WIB</p>
+                    <img :src="icon" alt="Weather Icon" class="w-[35%] mb-2" />
+                    <p class="text-[2vw]  text-gray-200">{{ temperature }}°C</p>
+                    <p class="text-[2vw]  text-gray-200">{{ weatherDescription.toUpperCase() }}</p>
                 </div>
                 <div class="w-2/3 flex flex-col items-center h-full justify-center">
                     <div
@@ -57,19 +57,19 @@
 
                         <!-- Display reminders -->
                         <div v-for="remind in reminder" :key="remind.id"
-                            class="rounded p-2 flex justify-between items-center shadow-md " :class="{
-                                'bg-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
-                                'bg-green-500': getTimeDifferenceInDays(remind.Deadline) > 30,
-                                'bg-yellow-500': getTimeDifferenceInDays(remind.Deadline) >= 1 &&
-                                    getTimeDifferenceInDays(remind.Deadline) <= 30
-                            }">
+                            class="rounded-2xl w-full py-2 px-3 flex justify-between bg-white">
                             <div class="flex-col flex w-[70%]">
-                                <div class="text-[0.8vw] font-bold">{{ remind.Judul }}</div>
-                                <div class="text-[0.8vw]">{{ remind.Deadline }}</div>
+                                <div class="text-[1vw] font-bold">{{ remind.Judul }}</div>
+                                <div class="text-[0.8vw] italic font-bold">{{ remind.Deadline }}</div>
                             </div>
-                            <div class="flex flex-col items-end text-[0.75vw] text-center">
+                            <div class="flex flex-col items-center text-[1vw]">
                                 <span>Sisa Waktu</span>
-                                <div>{{ getFormattedTimeDifference(remind.Deadline) }}</div>
+                                <div class="font-bold text-[0.8vw]" :class="{
+                                    'text-red-500': getTimeDifferenceInDays(remind.Deadline) < 1,
+                                    'text-green-500': getTimeDifferenceInDays(remind.Deadline) > 30,
+                                    'text-yellow-500': getTimeDifferenceInDays(remind.Deadline) >= 1 &&
+                                        getTimeDifferenceInDays(remind.Deadline) <= 30,
+                                }">{{ getFormattedTimeDifference(remind.Deadline) }}</div>
                             </div>
                         </div>
                     </div>

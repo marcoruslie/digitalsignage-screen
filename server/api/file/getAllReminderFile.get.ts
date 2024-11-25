@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { format, isAfter, isBefore, isToday, parse } from "date-fns";
+import { format, isBefore, isToday, parse } from "date-fns";
 
 // Function to read JSON file content
 async function readJsonFile(filePath: string): Promise<any> {
@@ -39,15 +39,8 @@ export default defineEventHandler(async (event) => {
   try {
     const reminderPath = "./resources/reminder/reminder.json";
     const fileJson = await readJsonFile(reminderPath);
-    const filteredReminder = fileJson.filter(
-      (reminder: any) =>
-        isBefore(
-          parse(reminder.Startdate, "dd MMMM yyyy", new Date()),
-          new Date()
-        ) || isToday(parse(reminder.Startdate, "dd MMMM yyyy", new Date()))
-    );
     // Return the updated reminders
-    return filteredReminder;
+    return fileJson;
   } catch (error) {
     console.error("Error:", error);
     return [];

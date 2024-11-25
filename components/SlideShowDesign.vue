@@ -2,7 +2,7 @@
 	<div
 		class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer overflow-hidden h-[95vh] flex flex-col items-center justify-center">
 		<div
-			class="flex bg-black bg-opacity-20 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+			class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
 			{{
 				currentItem1.title ?
 					currentItem1.title : 'TIDAK ADA JUDUL' }}

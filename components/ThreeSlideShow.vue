@@ -1,12 +1,11 @@
 <template>
     <div class="bg-gradient-to-tl from-Primary to-OnPrimaryContainer h-[95vh] overflow-hidden">
         <div class="flex justify-center items-center w-full h-full">
-            <div class="flex flex-col h-[95vh] w-2/5 overflow-auto shadow-lg">
+            <div class="flex flex-col h-[95vh] w-1/2 overflow-auto shadow-lg">
                 <!-- Konten 1 -->
-                <div
-                    class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center justify-center relative">
+                <div class="h-1/2 flex flex-col items-center justify-center relative">
                     <div
-                        class="flex bg-black bg-opacity-20 text-OnPrimary items-center justify-center text-[1.2vw] font-bold w-full text-center py-1">
+                        class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.6vw] font-medium w-full text-center py-1">
                         {{
                             currentItem1.title ?
                                 currentItem1.title : 'TIDAK ADA JUDUL' }}
@@ -21,10 +20,9 @@
                     </div>
                 </div>
                 <!-- Konten 2 -->
-                <div
-                    class="h-1/2 bg-gradient-to-br from-OnPrimaryContainer to-Primary flex flex-col items-center bg-opacity-60 justify-center overflow-auto">
+                <div class="h-1/2 flex flex-col items-center bg-opacity-60 justify-center overflow-auto">
                     <div
-                        class="flex bg-black bg-opacity-5 text-OnPrimary items-center justify-center text-[1.2vw] font-bold w-full text-center py-1">
+                        class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.6vw] font-medium w-full text-center py-1">
                         {{
                             currentItem2.title ?
                                 currentItem2.title : 'TIDAK ADA JUDUL' }}
@@ -41,9 +39,9 @@
                 </div>
             </div>
             <!-- Konten 3 -->
-            <div class="flex flex-col justify-center items-center h-[95vh] w-3/5 bg-black bg-opacity-10">
+            <div class="flex flex-col justify-center items-center h-[95vh] w-1/2">
                 <div
-                    class="flex bg-black bg-opacity-20 text-OnPrimary items-center justify-center text-[1.7vw] font-bold w-full text-center py-1">
+                    class="flex bg-OnPrimaryContainer text-OnPrimary items-center justify-center text-[1.6vw] font-medium w-full text-center py-1">
                     {{
                         currentItem3.title ?
                             currentItem3.title : 'TIDAK ADA JUDUL' }}

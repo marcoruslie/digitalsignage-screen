@@ -10,7 +10,7 @@
         <div class="flex-1 w-full overflow-hidden">
             <img v-if="currentItem1.type === 'image'" :src="'/_nuxt/' + currentItem1.url"
                 class="w-full h-full object-contain" />
-            <video v-else-if="currentItem1.type === 'video'" ref="video" autoplay controls muted playsinline
+            <video v-else-if="currentItem1.type === 'video'" ref="video" autoplay controls muted playsinline loop
                 class="w-full h-full object-contain" @playing="unmuteVideo" @ended="videoEnded">
                 <source :src="'/_nuxt/' + currentItem1.url" type="video/mp4" />
             </video>
